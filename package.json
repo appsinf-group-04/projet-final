@@ -1,0 +1,23 @@
+{
+  "name": "projet-final",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "tw": "npx tailwindcss -i ./public/css/input.css -o ./public/css/output.css --watch",
+    "dev": "nodemon src/server.js --delay 100ms",
+    "check": "npx @biomejs/biome check --apply ./src/"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@biomejs/biome": "1.3.3",
+    "nodemon": "^3.0.1",
+    "tailwindcss": "^3.3.5"
+  },
+  "dependencies": {
+    "ejs": "^3.1.9",
+    "express": "^4.18.2"
+  }
+}
