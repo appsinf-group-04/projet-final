@@ -1,0 +1,44 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="/public/css/output.css" rel="stylesheet">
+</head>
+
+<body>
+
+  <%- include("../components/header.ejs") %>
+  
+  <main class="mx-1/5 mt-10 flex justify-center">
+    <section class="w-1/5 border-solid border-black border-2">
+      <h2 class="p-4 text-center font-semibold text-xl">Filtres</h2>
+      <!-- TEMPORAIRE -->
+      <form action="#" method="get" class="p-4 flex flex-col justify-start items-center">
+        <label for="category">Catégorie:</label>
+        <input type="text" id="category" name="category" class="border-solid border-2 border-black">
+
+        <label for="price">Prix:</label>
+        <input type="number" id="price" name="price" min="0" class="border-solid border-2 border-black">
+
+        <label for="rating">Note du vendeur:</label>
+        <input type="number" id="rating" name="rating" min="1" max="5" class="border-solid border-2 border-black">
+
+        <button type="submit">Appliquer</button>
+    </form>
+    </section>
+    
+    <section class="w-3/5 border-solid border-black border-2">
+      <h2 class="p-4 text-center font-semibold text-xl">Annonces</h2>
+    </section>
+  </main>
+  
+  
+  <%- include("../components/loginModal.ejs") %>
+
+</body>
+
+<script src="/public/js/index.js"></script>
+
+</html>
