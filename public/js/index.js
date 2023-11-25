@@ -12,3 +12,19 @@ for (let modal of showLoginModal) {
     loginModal.close();
   });
 }
+
+// REGISTER MODAL
+const showRegisterModal = document.getElementById('showRegisterModal');
+const closeRegisterModal = document.getElementById('closeRegisterModal');
+const registerModal = document.getElementById('registerModal');
+
+if (showRegisterModal) {
+  showRegisterModal.addEventListener('click', () => {
+    loginModal.close();
+    registerModal.showModal();
+  });
+
+  closeRegisterModal.addEventListener('click', () => {
+    registerModal.close();
+  });
+}
