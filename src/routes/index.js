@@ -39,4 +39,8 @@ router.get("/profile", (_, res) => {
   res.render("pages/profile", { loggedIn: false, annonces });
 });
 
+router.get("/details", (_, res) => {
+  res.render("pages/details");
+});
+
 module.exports = router;
