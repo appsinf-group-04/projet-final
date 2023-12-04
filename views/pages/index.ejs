@@ -11,12 +11,12 @@
 
   <%- include("../components/header.ejs") %>
   
-  <main class="mx-1/5 mt-10 flex justify-center">
+  <main class="lg:mx-1/5 mt-10 flex justify-center">
     
     <!-- Filtres de recherches -->
-    <section class="w-1/5 border-solid border-black border-2">
+    <section class="hidden lg:w-1/5 lg:block border-solid border-black border-2">
       <h2 class="p-4 text-center font-semibold text-xl">Filtres</h2>
-      <form action="#" method="get" id="filtres" class="p-4 flex flex-col justify-start items-center">
+      <form action="#" method="get" id="filtres" class="py-4 flex flex-col justify-start items-center">
         <input type="search" name="Search" placeholder="Recherche" id="search-bar"
         class="block py-2 pl-3 leading-normal text-gray-900 border-0 rounded-md h-fit ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset">
 
@@ -39,17 +39,23 @@
     </section>
     
     <!-- Annonces -->
-    <section class="w-3/5 border-solid border-black border-2">
+    <section class="w-full md:w-4/5 lg:w-3/5 border-solid border-black border-2">
       <h2 class="p-4 text-center font-semibold text-xl">Annonces</h2>
       
       <div class="flex flex-col justify-center items-center">
         <% for(var i=0; i < annonces.length; i++) { %>
-          <div class="w-3/4 border-solid border-2 border-black">
-            <span><%= i %></span>
-            <span><%= annonces[i].seller %></span>
-            <span><%= annonces[i].objectName %></span>
-            <span><%= annonces[i].price %>€</span>
-            <span><%= annonces[i].state %></span>
+          <div class="w-4/5 p-4 my-4 flex flex-row rounded-md border-solid border-2 border-black shadow-md">
+            <img src="#" class="w-32 h-32 md:w-48 md:h-48 object-cover">
+            <div class="w-full px-4 flex flex-col">
+              
+              <div class="pb-2 flex flex-row justify-between">
+                <!-- Replacer href avec id de l'annonce pour la page -->
+                <a href="#" class="text-2xl font-semibold"><%= annonces[i].objectName %></a>
+                <span class="text-2xl font-bold"><%= annonces[i].price %>€</span>
+              </div>
+              <span><%= annonces[i].seller %> <%= annonces[i].sellerRating %>/5</span>
+              <span>état : <%= annonces[i].state %></span>
+            </div>
           </div>
         <% } %>
     </div>
