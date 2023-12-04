@@ -5,38 +5,36 @@ router.get("/", (_, res) => {
 });
 
 router.get("/profile", (_, res) => {
-
-  let annonces = [
+  const annonces = [
     {
       img: "/public/images/book_placeholder.png",
       seller: "Jean Mahmoud",
       objectName: "Livre de math",
       price: 11,
-      state: "Nul à chier"
+      state: "Nul à chier",
     },
     {
       img: "/public/images/book_placeholder.png",
       seller: "Abdul Kader",
       objectName: "Livre d'anglais",
       price: 40,
-      state: "Très bon"
+      state: "Très bon",
     },
     {
       img: "/public/images/book_placeholder.png",
       seller: "Max Günter",
       objectName: "Livre d'allemand",
       price: 35,
-      state: "Bon"
+      state: "Bon",
     },
     {
       img: "/public/images/book_placeholder.png",
       seller: "Olaf Müller",
       objectName: "Livre d'histoire",
       price: 65,
-      state: "Très bon"
-    }
+      state: "Très bon",
+    },
   ];
-
 
   res.render("pages/profile", { loggedIn: false, annonces });
 });
