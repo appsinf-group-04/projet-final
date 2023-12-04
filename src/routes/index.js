@@ -1,7 +1,7 @@
 const router = require("express").Router();
 
 router.get("/", (_, res) => {
-  res.render("index");
+  res.render("pages/index");
 });
 
 router.get("/profile", (_, res) => {
