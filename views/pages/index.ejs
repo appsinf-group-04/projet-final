@@ -1,0 +1,68 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="/public/css/output.css" rel="stylesheet">
+</head>
+
+<body>
+
+  <%- include("../components/header.ejs") %>
+  
+  <main class="flex justify-center mt-10 mx-1/5">
+    
+    <!-- Filtres de recherches -->
+    <section class="w-1/5 border-2 border-black border-solid">
+      <h2 class="p-4 text-xl font-semibold text-center">Filtres</h2>
+      <form action="#" method="get" id="filtres" class="flex flex-col items-center justify-start p-4">
+        <label for="category">Catégorie:</label>
+        <input type="text" id="category" name="category" class="border-2 border-black border-solid">
+
+        <label for="codeCours">Code du cours:</label>
+        <select name="codeCours" id="codeCours" form="filtres">
+          <option value="LINFO1212">LINFO1212</option>
+          <option value="LINFO1213">LINFO1213</option>
+          <option value="LINFO1214">LINFO1214</option>
+        </select>
+
+        <label for="price">Prix maximum:</label>
+        <!-- l'attribut step permet les nombres à virgule -->
+        <input type="number" id="price" name="price" min="0" step="0.01" class="border-2 border-black border-solid">
+
+        <label for="rating">Note minimum du vendeur:</label>
+        <input type="number" id="rating" name="rating" min="1" max="5" class="border-2 border-black border-solid">
+
+        <button type="submit" class="p-1 font-semibold text-white transition-all bg-blue-900 rounded-md hover:bg-blue-700">Appliquer</button>
+      </form>
+    </section>
+    
+    <!-- Annonces -->
+    <section class="w-3/5 border-2 border-black border-solid">
+      <h2 class="p-4 text-xl font-semibold text-center">Annonces</h2>
+      
+      <div class="flex flex-col items-center justify-center">
+        <% for(var i=0; i < annonces.length; i++) { %>
+          <div class="w-3/4 border-2 border-black border-solid">
+            <span><%= i %></span>
+            <span><%= annonces[i].seller %></span>
+            <span><%= annonces[i].objectName %></span>
+            <span><%= annonces[i].price %>€</span>
+            <span><%= annonces[i].state %></span>
+          </div>
+        <% } %>
+    </div>
+
+    </section>
+  </main>
+  
+  
+  <%- include("../components/loginModal.ejs") %>
+  <%- include("../components/registerModal.ejs") %>
+
+</body>
+
+<script src="/public/js/index.js"></script>
+
+</html>
