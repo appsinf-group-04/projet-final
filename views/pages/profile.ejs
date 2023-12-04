@@ -21,7 +21,10 @@
             </div>
 
             <div class="p-4">
-                <h2 class="mb-4 text-2xl font-bold">Mes annonces</h2>
+                <div class="flex items-center justify-between mb-4">
+                    <h2 class="text-2xl font-bold">Mes annonces</h2>
+                    <button class="px-4 py-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700">Ajouter une annonce</button>
+                </div>
                 <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
                     <% for(var i=0; i < annonces.length; i++) { %>
                         <div class="p-4 bg-white rounded-lg shadow-md">
