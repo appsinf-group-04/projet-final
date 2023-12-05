@@ -6,7 +6,8 @@
   "scripts": {
     "tw": "npx tailwindcss -i ./public/css/input.css -o ./public/css/output.css --watch",
     "dev": "nodemon src/server.js --delay 100ms",
-    "check": "npx @biomejs/biome check --apply ./src/"
+    "check": "npx @biomejs/biome check --apply ./src/",
+    "db": "mongod --dbpath ./data"
   },
   "keywords": [],
   "author": "",
