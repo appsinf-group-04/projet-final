@@ -21,6 +21,7 @@
         class="block py-2 pl-3 leading-normal text-gray-900 border-0 rounded-md h-fit ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset">
 
         <label for="course">Code du cours:</label>
+        
         <select name="codeCours" id="codeCours" form="filtres">
           <option value="LINFO1212">LINFO1212</option>
           <option value="LINFO1213">LINFO1213</option>
@@ -29,12 +30,14 @@
 
         <label for="price">Prix maximum:</label>
         <!-- l'attribut step permet les nombres à virgule -->
+
         <input type="number" id="price" name="price" min="0" step="0.01" class="border-solid border-2 border-black">
 
         <label for="rating">Note minimum du vendeur:</label>
         <input type="number" id="rating" name="rating" min="1" max="5" class="border-solid border-2 border-black">
 
         <button type="submit" class="my-1 py-1 px-4 font-semibold text-white rounded-md bg-blue-900 hover:bg-blue-700 transition-all">Appliquer</button>
+
       </form>
     </section>
     
@@ -56,6 +59,7 @@
               <span><%= annonces[i].seller %> <%= annonces[i].sellerRating %>/5</span>
               <span>état : <%= annonces[i].state %></span>
             </div>
+
           </div>
         <% } %>
     </div>
