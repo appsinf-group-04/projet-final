@@ -5,21 +5,21 @@ const authMiddleware = require("../middlewares/auth");
 router.use("/auth", authRouter);
 
 router.get("/", (_, res) => {
-  let annonces = [
+  const annonces = [
     {
       seller: "Jean Mahmoud",
       sellerRating: 2.11,
       objectName: "Livre de math",
       price: 11,
-      state: "Nul à chier"
+      state: "Nul à chier",
     },
     {
       seller: "Abdul Kader",
       sellerRating: 4,
       objectName: "Livre d'anglais",
       price: 40,
-      state: "Très bon"
-    }
+      state: "Très bon",
+    },
   ];
   res.render("pages/index", { loggedIn: false, annonces });
 });
