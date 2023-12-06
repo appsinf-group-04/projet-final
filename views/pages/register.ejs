@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="/public/css/output.css" rel="stylesheet">
+  </head>
+  <body>
+    <form method="POST" action="/auth/register">
+
+      <div class="flex flex-col w-1/2 p-4">
+          
+        <div>
+          <% if (errors && errors.some(e => e.path=="email")) { %>
+            <p class="text-red-500"><%= errors.find(e => e.path=="email").message %></p>
+          <% } %>
+
+          <label for="email"></label> 
+          <input type="email" name="email" id="email" value="<%= formData ? formData['email'] : '' %>" class="border">
+        </div>
+
+        <div>
+          <% if (errors && errors.some(e => e.path=="name")) { %>
+            <p class="text-red-500"><%= errors.find(e => e.path=="name").message %></p>
+          <% } %>
+
+          <label for="name"></label> 
+          <input type="text" name="name" id="name"class="border" value="<%= formData ? formData['name'] : '' %>">
+        </div>
+
+
+        <div>
+          <% if (errors && errors.some(e => e.path=="password")) { %>
+            <p class="text-red-500"><%= errors.find(e => e.path=="password").message %></p>
+          <% } %>
+
+          <label for="password"></label> 
+          <input type="password" name="password" id="password"class="border">
+        </div>
+
+        <div>
+          <% if (errors && errors.some(e => e.path=="phone")) { %>
+            <p class="text-red-500"><%= errors.find(e => e.path=="phone").message %></p>
+          <% } %>
+
+          <label for="phone"></label> 
+          <input type="tel" name="phone" id="phone"class="border" value="<%= formData ? formData['phone'] : '' %>">
+        </div>
+
+        <input type="submit" name="Submit">
+
+      </div>
+    </form>
+  </body>
+</html>
