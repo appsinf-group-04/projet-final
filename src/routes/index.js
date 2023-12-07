@@ -21,7 +21,7 @@ router.get("/", (_, res) => {
       state: "Très bon",
     },
   ];
-  res.render("pages/pages/index", { loggedIn: false, annonces });
+  res.render("pages/index", { loggedIn: false, annonces });
 });
 
 router.get("/profile", (_, res) => {
@@ -60,7 +60,7 @@ router.get("/profile", (_, res) => {
 });
 
 router.get("/details", (_, res) => {
-  res.render("pages/details");
+  res.render("pages/details", { loggedIn: false });
 });
 
 router.get("/profile/create", (_, res) => {
