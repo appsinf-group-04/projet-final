@@ -10,45 +10,49 @@
 <body>
 
   <%- include("../components/header.ejs") %>
+
   
+  <button id="toggleFiltresButton" class="lg:hidden block mx-auto bg-blue-900 text-white px-4 py-2 rounded-md m-4">Afficher les filtres</button>
+
   <main class="lg:mx-1/5 mt-10 flex justify-center">
     
     <!-- Filtres de recherches -->
-    <section class="hidden lg:w-1/5 lg:block border-solid border-black border-2">
-      <h2 class="p-4 text-center font-semibold text-xl">Filtres</h2>
-      <form action="#" method="get" id="filtres" class="py-4 flex flex-col justify-start items-center">
+    <section id="filtresSection" class="hidden lg:w-1/5 lg:block border-solid border-black border-2">
+      <h2 class="p-4 text-center font-semibold text-xl">Recherche et Filtres</h2>
+      <form action="#" method="get" id="filtres" class="py-4 max-w-prose flex flex-col justify-start items-center">
         <input type="search" name="Search" placeholder="Recherche" id="search-bar"
-        class="block py-2 pl-3 leading-normal text-gray-900 border-0 rounded-md h-fit ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset">
+        class="block py-2 pl-3 mb-4 leading-normal text-gray-900 border-0 rounded-md h-fit ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset">
 
-        <label for="course">Code du cours:</label>
-        
-        <select name="codeCours" id="codeCours" form="filtres">
-          <option value="LINFO1212">LINFO1212</option>
-          <option value="LINFO1213">LINFO1213</option>
-          <option value="LINFO1214">LINFO1214</option>
+        <label for="courses">Code du cours:</label>
+        <select name="codeCours" id="codeCours" form="filtres" class="block py-2 pl-3 mb-4 mt-1 text-center ring-1 ring-gray-300 rounded-md">
+          <% for(var i=0; i < listOfCourses.length; i++) { %>
+            <option value="<%= listOfCourses[i] %>"><%= listOfCourses[i] %></option>          
+          <% } %>
         </select>
 
         <label for="price">Prix maximum:</label>
         <!-- l'attribut step permet les nombres à virgule -->
 
-        <input type="number" id="price" name="price" min="0" step="0.01" class="border-solid border-2 border-black">
+        <input type="number" id="price" name="price" min="0" step="0.01" 
+        class="py-2 pl-3 mb-4 mt-1 block text-center ring-1 ring-gray-300 rounded-md">
 
         <label for="rating">Note minimum du vendeur:</label>
-        <input type="number" id="rating" name="rating" min="1" max="5" class="border-solid border-2 border-black">
+        <input type="number" id="rating" name="rating" min="1" max="5" 
+        class="py-2 pl-3 mb-4 mt-1 block text-center ring-1 ring-gray-300 rounded-md">
 
-        <button type="submit" class="my-1 py-1 px-4 font-semibold text-white rounded-md bg-blue-900 hover:bg-blue-700 transition-all">Appliquer</button>
+        <button type="submit" class="py-2 px-4 block font-semibold text-white rounded-md bg-blue-900 hover:bg-blue-700 transition-all">Appliquer</button>
 
       </form>
     </section>
     
     <!-- Annonces -->
-    <section class="w-full md:w-4/5 lg:w-3/5 border-solid border-black border-2">
+    <section id="announcesSection" class="w-full lg:w-3/5 border-solid border-black border-2">
       <h2 class="p-4 text-center font-semibold text-xl">Annonces</h2>
       
       <div class="flex flex-col justify-center items-center">
         <% for(var i=0; i < annonces.length; i++) { %>
           <div class="w-4/5 p-4 my-4 flex flex-row rounded-md border-solid border-2 border-black shadow-md">
-            <img src="#" class="w-32 h-32 md:w-48 md:h-48 object-cover">
+            <img src="#" class="w-32 h-32 md:w-40 md:h-40 object-cover">
             <div class="w-full px-4 flex flex-col">
               
               <div class="pb-2 flex flex-row justify-between">

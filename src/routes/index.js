@@ -5,6 +5,7 @@ const authMiddleware = require("../middlewares/auth");
 router.use("/auth", authRouter);
 
 router.get("/", (_, res) => {
+  
   const annonces = [
     {
       seller: "Jean Mahmoud",
@@ -21,7 +22,10 @@ router.get("/", (_, res) => {
       state: "Très bon",
     },
   ];
-  res.render("pages/index", { loggedIn: false, annonces });
+
+  const listOfCourses = ["LINFO1212", "LMATH1002", "LCOPS1204"];
+
+  res.render("pages/index", { loggedIn: false, annonces, listOfCourses });
 });
 
 router.get("/profile/create", (_, res) => {
