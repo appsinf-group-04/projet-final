@@ -12,6 +12,7 @@
   <%- include("../components/header.ejs") %>
 
   
+
   <button id="toggleFiltresButton" class="lg:hidden block mx-auto bg-blue-900 text-white px-4 py-2 rounded-md m-4">Afficher les filtres</button>
 
   <main class="lg:mx-1/5 mt-10 flex justify-center">
@@ -49,13 +50,13 @@
     <section id="announcesSection" class="w-full lg:w-3/5">
       <h2 class="p-4 text-center font-semibold text-4xl">Annonces</h2>
       
-      <div class="flex flex-col justify-center items-center">
+      <div class="flex flex-col items-center justify-center">
         <% for(var i=0; i < annonces.length; i++) { %>
           <div class="w-4/5 p-4 my-4 flex flex-row rounded-md bg-gray-100 border-black shadow-md">
             <img src="#" class="w-32 h-32 md:w-40 md:h-40 object-cover">
             <div class="w-full px-4 flex flex-col">
               
-              <div class="pb-2 flex flex-row justify-between">
+              <div class="flex flex-row justify-between pb-2">
                 <!-- Replacer href avec id de l'annonce pour la page -->
                 <a href="#" class="text-2xl font-semibold"><%= annonces[i].objectName %></a>
                 <span class="text-2xl font-bold"><%= annonces[i].price %>€</span>
