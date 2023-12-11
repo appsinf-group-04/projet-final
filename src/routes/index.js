@@ -1,6 +1,11 @@
 const router = require("express").Router();
 const authRouter = require("./auth");
 const authMiddleware = require("../middlewares/auth");
+const {
+  getAccountsCreatedByDay,
+  getBansOverTime,
+  getAccountsOverTime,
+} = require("../database/stats");
 
 router.use("/auth", authRouter);
 
@@ -65,6 +70,18 @@ router.get("/details", (_, res) => {
 
 router.get("/profile/create", (_, res) => {
   res.render("pages/create");
+});
+
+router.get("/dash", async (_req, res) => {
+  const accountsByDay = await getAccountsCreatedByDay();
+  const bansOverTime = await getBansOverTime();
+  const accountsOverTime = await getAccountsOverTime();
+
+  res.render("pages/dashboard", {
+    accountsByDay,
+    bansOverTime,
+    accountsOverTime,
+  });
 });
 
 // example of middleware usage, this route is protected and cannot be accessed without being logged in

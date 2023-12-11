@@ -1,3 +1,5 @@
+const UserModel = require("../models/user");
+
 /**
  * Check if the email is authorized to register
  * @param {String} email
@@ -33,4 +35,52 @@ function isPhoneNumber(maybePhoneNumber) {
   return regex.test(maybePhoneNumber);
 }
 
-module.exports = { isAuthorizedEmail, isPhoneNumber };
+/**
+ * Get today's date formatted as dd/mm/yyyy
+ * @returns {String}
+ */
+function getTodayFormatted() {
+  const date = new Date();
+
+  return formatDate(date);
+}
+
+function formatDate(date) {
+  let day = date.getDate();
+  let month = date.getMonth();
+  const year = date.getFullYear();
+
+  if (day < 10) {
+    day = `0${day}`;
+  }
+
+  month += 1;
+
+  if (month < 10) {
+    month = `0${month}`;
+  }
+
+  return `${day}/${month}/${year}`;
+}
+
+/**
+ * Get the next day
+ * @param {Date} currentDate
+ * @returns {Date}
+ */
+function getNextDay(currentDate) {
+  const currentDateTime = new Date(currentDate);
+
+  const nextDayDateTime = new Date(currentDateTime);
+  nextDayDateTime.setDate(currentDateTime.getDate() + 1);
+
+  return nextDayDateTime;
+}
+
+module.exports = {
+  isAuthorizedEmail,
+  isPhoneNumber,
+  getTodayFormatted,
+  formatDate,
+  getNextDay,
+};
