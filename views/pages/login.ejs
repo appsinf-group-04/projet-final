@@ -6,37 +6,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="/public/css/output.css" rel="stylesheet">
   </head>
-  <body>
-    <% if (isAuth) { %>
-      <p>You are logged in!</p><br>
-      name: <%= user.name %><br>
-      role: <%= user.role %><br>
-    <% } %>
 
-    <form method="POST" action="/auth/login">
-      <div class="flex flex-col w-1/2 p-4">
-          
-        <div>
+  <%- include("../components/header.ejs") %>
+
+  <body class="min-h-screen bg-gray-100">
+    <div class="container p-4 mx-auto">
+      <% if (loggedIn) { %>
+        <p class="text-green-500">You are logged in!</p>
+        <p>Name: <%= user.name %></p>
+        <p>Role: <%= user.role %></p>
+      <% } %>
+
+      <form method="POST" action="/auth/login" class="max-w-md p-8 mx-auto mt-40 bg-white rounded-lg shadow-md">
+        <div class="mb-4">
+          <label for="email" class="block text-sm font-medium text-gray-700">Email</label> 
+          <input type="email" name="email" id="email" value="<%= formData ? formData['email'] : '' %>" class="w-full p-2 mt-1 border rounded-md">
           <% if (errors && errors.some(e => e.path=="email")) { %>
             <p class="text-red-500"><%= errors.find(e => e.path=="email").message %></p>
           <% } %>
-
-          <label for="email"></label> 
-          <input type="email" name="email" id="email" value="<%= formData ? formData['email'] : '' %>" class="border">
         </div>
 
-         <div>
+        <div class="mb-4">
+          <label for="password" class="block text-sm font-medium text-gray-700">Password</label> 
+          <input type="password" name="password" id="password" class="w-full p-2 mt-1 border rounded-md">
           <% if (errors && errors.some(e => e.path=="password")) { %>
             <p class="text-red-500"><%= errors.find(e => e.path=="password").message %></p>
           <% } %>
-
-          <label for="password"></label> 
-          <input type="password" name="password" id="password"class="border">
         </div>
 
-        <input type="submit" name="Submit">
-
-      </div>
-    </form>
+        <button type="submit" class="w-full px-4 py-2 text-white bg-blue-500 rounded-md hover:bg-blue-600">Login</button>
+      </form>
+    </div>
   </body>
 </html>
