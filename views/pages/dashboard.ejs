@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="/public/css/output.css" rel="stylesheet">
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  </head>
+  <body>
+    <div style="width: 800px;"><canvas id="acquisitions"></canvas></div>
+    <div style="width: 800px;"><canvas id="bans"></canvas></div>
+
+    <script src="/public/js/dashboard.js"></script>
+
+    <script>
+      const accountsByDay = JSON.parse('<%- JSON.stringify(accountsByDay) %>');
+      const bansOverTime = JSON.parse('<%- JSON.stringify(bansOverTime) %>');
+      const accountsOverTime = JSON.parse('<%- JSON.stringify(accountsOverTime) %>');
+
+      createAccountsByDayGraph("acquisitions", accountsByDay);
+      createOverTimeGraph("bans", bansOverTime, accountsOverTime);
+    </script>
+  </body>
+</html>
