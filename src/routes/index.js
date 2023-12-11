@@ -26,7 +26,10 @@ router.get("/", (_, res) => {
       state: "Très bon",
     },
   ];
-  res.render("pages/index", { loggedIn: false, annonces });
+
+  const listOfCourses = ["LINFO1212", "LMATH1002", "LCOPS1204"];
+
+  res.render("pages/index", { loggedIn: false, annonces, listOfCourses });
 });
 
 router.get("/profile", (_, res) => {
