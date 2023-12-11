@@ -5,7 +5,6 @@ const authMiddleware = require("../middlewares/auth");
 router.use("/auth", authRouter);
 
 router.get("/", (_, res) => {
-  
   const annonces = [
     {
       seller: "Jean Mahmoud",
