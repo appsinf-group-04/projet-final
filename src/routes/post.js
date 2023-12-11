@@ -1,32 +1,34 @@
 const { Router } = require("express");
 const router = Router();
 const { z } = require("zod");
+const authMiddleware = require("../middlewares/auth");
 
 const { createPost } = require("../database/post");
 const { getUserByEmail } = require("../database/auth");
 
-router.get("/create-post", (req, res) => {
+router.get("/profile/create", authMiddleware.userAuth, (req, res) => {
   const errors = req.session.errors;
   const formData = req.session.formData;
   const isAuth = req.session.user ? true : false;
   const user = req.session.user;
 
-  res.render("pages/create-post", { errors, formData, isAuth, user });
+  res.render("pages/create", { errors, formData, isAuth, user });
   req.session.errors = null;
   req.session.formData = null;
 });
 
-const CreatePostSchema = z.object({
-  title: z.string(),
+const CreateSchema = z.object({
+  title: z.string().min(5).max(40),
+  description: z.string().optional(),
   price: z.number().positive(),
   state: z.string(),
-  description: z.string().optional(),
-  pictures: z.array(z.string()).optional(),
+  image: z.array(z.string()).optional(),
 });
-router.post("/create-post", async (req, res) => {
+
+router.post("/profile/create", async (req, res) => {
   const body = req.body;
 
-  const zodResult = CreatePostSchema.safeParse(body);
+  const zodResult = CreateSchema.safeParse(body);
 
   if (!zodResult.success) {
     const errors = [];
@@ -39,26 +41,10 @@ router.post("/create-post", async (req, res) => {
     }
     req.session.errors = errors;
     req.session.formData = body;
-    return res.redirect("/post/create-post");
+
+    return res.redirect("/profile/create");
   }
 
-  // Assuming you have a middleware to check if the user is authenticated
-  const userEmail = req.session.user.email; // Change this based on your user session structure
-  const user = await getUserByEmail(userEmail);
-
-  const post = await createPost({
-    title: zodResult.data.title,
-    price: zodResult.data.price,
-    state: zodResult.data.state,
-    description: zodResult.data.description,
-    pictures: zodResult.data.pictures,
-    refUser: user._id,
-  });
-
-  req.session.errors = null;
-  req.session.formData = null;
-
-  res.redirect("/profile"); // Attention que de base c'est / 
 });
 
 module.exports = router;
