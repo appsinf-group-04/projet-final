@@ -66,6 +66,26 @@ async function isUserBanned(email) {
   return user.ban.banned;
 }
 
+async function getLatestBannedUsers(amount) {
+  const users = await UserModel.find({ "ban.banned": true })
+    .sort({ "ban.at": -1 })
+    .limit(amount);
+  return users;
+}
+
+async function searchBannedUsers(query) {
+  const users = await UserModel.find({
+    $or: [
+      { email: { $regex: query, $options: "i" } },
+      { name: { $regex: query, $options: "i" } },
+      { "ban.reason": { $regex: query, $options: "i" } },
+    ],
+    $and: [{ "ban.banned": true }],
+  });
+
+  return users;
+}
+
 module.exports = {
   createUser,
   getUserByEmail,
@@ -73,4 +93,6 @@ module.exports = {
   banUser,
   unbanUser,
   isUserBanned,
+  getLatestBannedUsers,
+  searchBannedUsers,
 };
