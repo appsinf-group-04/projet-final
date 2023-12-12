@@ -2,10 +2,12 @@ const { Router } = require("express");
 const router = Router();
 const { z } = require("zod");
 
+const authMiddleware = require("../middlewares/auth");
 const {
   createUser,
   getUserByEmail,
   testPassword,
+  unbanUser,
 } = require("../database/auth");
 const { isPhoneNumber, isAuthorizedEmail } = require("../utils/utils");
 
@@ -158,6 +160,14 @@ router.post("/register", async (req, res) => {
 router.get("/logout", (req, res) => {
   req.session.destroy();
   res.redirect("/auth/login");
+});
+
+router.get("/unban/:email", authMiddleware.adminAuth, async (req, res) => {
+  const email = req.params.email;
+
+  await unbanUser(email);
+
+  res.redirect("/dash#search-bar");
 });
 
 module.exports = router;

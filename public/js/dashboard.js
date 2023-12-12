@@ -68,24 +68,26 @@ function fillMissingDates(data1, data2) {
 
   // Function to get the nearest previous date
   function getNearestPreviousDate(date, array) {
+    array.sort((a, b) => {
+      const dateA = a.split('/').reverse().join('-');
+      const dateB = b.split('/').reverse().join('-');
+      return new Date(dateA) - new Date(dateB);
+    });
+
     let targetDate = new Date(date.split('/').reverse().join('-'));
 
     let nearestDate = null;
-    for (let i = 0; i < array.length; i++) {
+
+    for (let i = array.length - 1; i >= 0; i--) {
       const itemDate = new Date(array[i].split('/').reverse().join('-'));
-      if (itemDate < targetDate) {
+
+      if (itemDate <= targetDate) {
         nearestDate = itemDate;
-      } else {
         break;
       }
     }
 
     return nearestDate;
-    /*const previousDates = array.filter(itemDate => {
-      const itemDateFormatted = itemDate.split('/').reverse().join('-');
-      return new Date(itemDateFormatted) < new Date(date);
-    });
-    return previousDates.length > 0 ? previousDates[previousDates.length - 1] : 0;*/
   }
 
   // Iterate through allDates and fill missing dates in data1 and data2
@@ -95,12 +97,24 @@ function fillMissingDates(data1, data2) {
 
     if (!data1Item) {
       const prevDate = getNearestPreviousDate(date, data1.map(item => item.date));
+
+      if (!prevDate) {
+        data1.push({ date, bans: 0 });
+        return;
+      }
+
       const prevValue = data1.find(item => item.date === formatDate(prevDate));
       data1.push({ date, bans: prevValue.bans || 0 });
     }
 
     if (!data2Item) {
       const prevDate = getNearestPreviousDate(date, data2.map(item => item.date));
+
+      if (!prevDate) {
+        data2.push({ date, count: 0 });
+        return;
+      }
+
       const prevValue = data2.find(item => item.date === formatDate(prevDate));
       data2.push({ date, count: prevValue.count || 0 });
     }
@@ -137,3 +151,24 @@ function formatDate(date) {
   return `${day}/${month}/${year}`;
 }
 
+let delayTimer;
+let search = document.getElementById("search-bar");
+
+function handleSearch() {
+  clearTimeout(delayTimer);
+
+
+  delayTimer = setTimeout(() => {
+    if (search.value.length > 0) {
+      const currentURL = new URL(window.location.href);
+      currentURL.searchParams.set("q", search.value);
+      currentURL.hash = "search-bar";
+      window.location.href = currentURL.toString();
+    } else {
+      const newURL = new URL(window.location.href);
+      newURL.searchParams.delete("q");
+      newURL.hash = "search-bar";
+      window.location.href = newURL.toString();
+    }
+  }, 800);
+}
