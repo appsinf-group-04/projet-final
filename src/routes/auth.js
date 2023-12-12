@@ -8,8 +8,10 @@ const {
   getUserByEmail,
   testPassword,
   unbanUser,
+  logLogin,
 } = require("../database/auth");
 const { isPhoneNumber, isAuthorizedEmail } = require("../utils/utils");
+const { logNewLogin } = require("../database/logins");
 
 router.get("/login", (req, res) => {
   const errors = req.session.errors;
@@ -88,9 +90,10 @@ router.post("/login", async (req, res) => {
 
   req.session.user = { name: userExists.name, role: userExists.role };
   req.session.errors = null;
-  //
-  //TODO: change this to redirect to /
-  return res.redirect("/auth/login");
+
+  await logLogin(zodResult.data.email);
+
+  return res.redirect("/");
 });
 
 router.get("/register", (req, res) => {
@@ -153,6 +156,9 @@ router.post("/register", async (req, res) => {
   );
   req.session.user = { name: user.name, role: user.role };
   req.session.errors = null;
+
+  await logLogin(zodResult.data.email);
+  await logNewLogin();
 
   res.redirect("/");
 });

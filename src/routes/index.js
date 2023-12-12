@@ -8,6 +8,7 @@ const {
 } = require("../database/stats");
 const { getLatestBannedUsers, searchBannedUsers } = require("../database/auth");
 const { formatDate } = require("../utils/utils");
+const { getLoginsPerDay: getLoginsByDay } = require("../database/logins");
 
 router.use("/auth", authRouter);
 
@@ -83,6 +84,7 @@ router.get("/dash", authMiddleware.adminAuth, async (req, res) => {
   const accountsByDay = await getAccountsCreatedByDay();
   const bansOverTime = await getBansOverTime();
   const accountsOverTime = await getAccountsOverTime();
+  const loginsByDay = await getLoginsByDay();
 
   let bans = [];
   if (query) {
@@ -112,6 +114,7 @@ router.get("/dash", authMiddleware.adminAuth, async (req, res) => {
     accountsOverTime,
     bans,
     query,
+    loginsByDay,
   });
 });
 

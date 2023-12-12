@@ -2,7 +2,6 @@ const path = require("path");
 const express = require("express");
 const session = require("express-session");
 const mongoose = require("mongoose");
-const auth = require("./database/auth");
 
 const app = express();
 
@@ -26,7 +25,5 @@ app.listen(process.env.PORT || 8080, () => {
   mongoose
     .connect("mongodb://127.0.0.1:27017/projet-final")
     .then(() => console.log("Connected to MongoDB"))
-    // .then(async () => auth.createUser("jocke@ucl.be", "azer", "0470626545", "Jocke"))
-
     .catch((err) => console.log(err));
 });
