@@ -8,9 +8,51 @@
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   </head>
-  <body>
+  <body class="px-14 pb-10">
+    <h1 class="text-xl font-semibold">Graphs</h1>
     <div style="width: 800px;"><canvas id="acquisitions"></canvas></div>
     <div style="width: 800px;"><canvas id="bans"></canvas></div>
+
+  <div class="flex items-center justify-between pt-16">
+    <h1 class="text-xl font-semibold">
+      <%= query ? "Recherche Bans" : "Latest Bans" %>
+    </h1>
+    
+    <input type="search" name="Search" placeholder="Recherche" id="search-bar" onkeyup="handleSearch()" value="<%= query %>"
+      class="block w-1/5 py-2 pl-3 leading-normal text-gray-900 border-0 rounded-md h-fit ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-700">
+  </div>
+
+    <div class="flex justify-center pt-4 overflow-x-auto">
+      <table class="w-full divide-y divide-gray-200">
+        <thead>
+          <tr>
+            <th scope="col" class="px-6 py-3 text-xs font-medium text-left text-gray-500 uppercase">Nom</th>
+            <th scope="col" class="px-6 py-3 text-xs font-medium text-left text-gray-500 uppercase">Email</th>
+            <th scope="col" class="px-6 py-3 text-xs font-medium text-left text-gray-500 uppercase">Ban reason</th>
+            <th scope="col" class="px-6 py-3 text-xs font-medium text-left text-gray-500 uppercase">Ban day</th>
+            <th scope="col" class="px-6 py-3 text-xs font-medium text-left text-gray-500 uppercase"></th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-200">
+          <% for(var i=0; i < bans.length; i++) { %>
+            <tr class="hover:bg-gray-100 ">
+              <td class="px-6 py-4 text-sm font-medium text-gray-800 whitespace-nowrap "><%= bans[i].name %></td>
+              <td class="px-6 py-4 text-sm font-medium text-gray-800 whitespace-nowrap "><%= bans[i].email %></td>
+              <td class="px-6 py-4 text-sm font-medium text-gray-800"><%= bans[i].ban.reason %></td>
+              <td class="px-6 py-4 text-sm font-medium text-gray-800"><%= bans[i].ban.at %></td>
+              <td class="px-6 py-4 text-sm font-medium text-gray-800">
+                <a class="bg-blue-900 rounded-lg px-4 py-2 text-white cursor-pointer hover:bg-blue-950" href="/auth/unban/<%= bans[i].email %>">Unban</a>
+              </td>
+            </tr>
+          <% } %>
+        </tbody>
+      </table>
+    </div>
+  <% if(query && bans.length == 0) { %>
+    <div class="flex justify-center pt-4">
+      <p class="text-gray-500">Aucun résultat trouvé pour votre recherche.</p>
+    </div>
+  <% } %>
 
     <script src="/public/js/dashboard.js"></script>
 
