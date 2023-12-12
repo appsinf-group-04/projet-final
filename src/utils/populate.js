@@ -1,4 +1,6 @@
 const UserModel = require("../models/user");
+const { logNewLogin } = require("../database/logins");
+const { formatDate } = require("./utils");
 
 async function unpopulateUserDB(fakeUsers) {
   for (const email of fakeUsers) {
@@ -9,16 +11,18 @@ async function unpopulateUserDB(fakeUsers) {
 async function populateUserDB(amountToFake) {
   const fakers = [];
   for (let i = 0; i < amountToFake; i++) {
-    const isUser = Math.random();
     const isBanned = Math.random();
     const randomDay = Math.floor(Math.random() * 20);
+    const createdAt = new Date(Date.now() - randomDay * 864e5);
+
+    await logNewLogin(createdAt);
 
     const user = {
       email: `fakeuser${i}@uclouvain.be`,
       password: `fakeuser${i}`,
       name: `FakeUser${i}`,
       phone: "0499999999",
-      createdAt: new Date(Date.now() - randomDay * 864e5),
+      createdAt: createdAt,
     };
 
     if (isBanned > 0.7) {
