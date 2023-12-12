@@ -12,6 +12,7 @@
     <h1 class="text-xl font-semibold">Graphs</h1>
     <div style="width: 800px;"><canvas id="acquisitions"></canvas></div>
     <div style="width: 800px;"><canvas id="bans"></canvas></div>
+    <div style="width: 800px;"><canvas id="logins"></canvas></div>
 
   <div class="flex items-center justify-between pt-16">
     <h1 class="text-xl font-semibold">
@@ -60,9 +61,11 @@
       const accountsByDay = JSON.parse('<%- JSON.stringify(accountsByDay) %>');
       const bansOverTime = JSON.parse('<%- JSON.stringify(bansOverTime) %>');
       const accountsOverTime = JSON.parse('<%- JSON.stringify(accountsOverTime) %>');
+      const loginsByDay = JSON.parse('<%- JSON.stringify(loginsByDay) %>');
 
       createAccountsByDayGraph("acquisitions", accountsByDay);
       createOverTimeGraph("bans", bansOverTime, accountsOverTime);
+      createLoginsByDayGraph("logins", loginsByDay);
     </script>
   </body>
 </html>

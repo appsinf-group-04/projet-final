@@ -1,6 +1,8 @@
 const crypto = require("crypto");
 
 const UserModel = require("../models/user");
+const { logNewLogin } = require("./logins");
+const { formatDate } = require("../utils/utils");
 
 async function getUserByEmail(email) {
   const user = UserModel.findOne({ email: email });
@@ -86,6 +88,23 @@ async function searchBannedUsers(query) {
   return users;
 }
 
+async function logLogin(email) {
+  const now = new Date();
+  const nowFormatted = formatDate(now);
+
+  const user = await UserModel.findOne({ email: email });
+  const lastLogin = user.lastLogin;
+  const lastLoginFormatted = formatDate(lastLogin);
+
+  user.lastLogin = now;
+
+  await user.save();
+
+  if (lastLoginFormatted !== nowFormatted) {
+    await logNewLogin();
+  }
+}
+
 module.exports = {
   createUser,
   getUserByEmail,
@@ -95,4 +114,5 @@ module.exports = {
   isUserBanned,
   getLatestBannedUsers,
   searchBannedUsers,
+  logLogin,
 };

@@ -16,6 +16,26 @@ function createAccountsByDayGraph(selector, data) {
   );
 }
 
+function createLoginsByDayGraph(selector, data) {
+  const element = document.getElementById(selector);
+
+  new Chart(
+    element,
+    {
+      type: 'line',
+      data: {
+        datasets: [
+          {
+            label: 'Accounts logged in by day',
+            data: data.map((i) => ({ x: i.day, y: i.count })),
+          }
+        ]
+      }
+    }
+  );
+}
+
+
 function createOverTimeGraph(selector, data1, data2) {
 
   // merge data1 and data2
