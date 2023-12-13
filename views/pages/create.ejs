@@ -8,16 +8,16 @@
 </head>
 <body class="bg-gray-100">
 
-    <%- // include("../components/header.ejs") -%>
+    <%- include("../components/header.ejs") -%>
 
     <div class="container mx-auto mt-10">
-        <div class="p-6 bg-white rounded-lg shadow-md">
-            <h1 class="mb-4 text-2xl font-bold">Créer une Annonce</h1>
+        <div class="p-8 mx-auto bg-white rounded-lg shadow-md max-w-7xl">
+            <h1 class="mb-4 text-xl font-bold">Créer une Annonce</h1>
             <form action="/create-ad" method="POST" enctype="multipart/form-data">
                 <div class="flex mb-4">
                     <label for="imgFile" class="mr-2">Déposer les images (5) :</label>
                     <div class="relative">
-                        <label for="fileInput" class="px-4 py-2 text-white bg-blue-500 rounded-md cursor-pointer">
+                        <label for="fileInput" class="px-2 py-1 text-white bg-blue-500 rounded-md cursor-pointer">
                             Choisir un fichier
                         </label>
                         <input type="file" id="fileInput" name="imgFile" class="hidden" accept="image/*">
@@ -42,8 +42,8 @@
                 <textarea id="description" name="description" class="w-full p-2 mb-4 border rounded-md resize-none"></textarea>
 
                 <div class="flex justify-between">
-                    <button type="submit" class="px-4 py-2 text-white bg-blue-500 rounded-md">Créer l'annonce</button>
-                    <button type="button" class="px-4 py-2 ml-auto text-gray-500 bg-gray-200 rounded-md">Annuler</button>
+                    <button type="submit" class="px-2 py-1 text-white bg-blue-500 rounded-md">Créer l'annonce</button>
+                    <a href="/profile" class="px-2 py-1 ml-auto text-gray-500 bg-gray-200 rounded-md">Annuler</a>
                 </div>
             </form>
         </div>

@@ -88,7 +88,7 @@ router.post("/login", async (req, res) => {
     return res.redirect("/auth/login");
   }
 
-  req.session.user = { name: userExists.name, role: userExists.role };
+  req.session.user = { name: userExists.name, role: userExists.role, email: userExists.email };
   req.session.errors = null;
 
   await logLogin(zodResult.data.email);
