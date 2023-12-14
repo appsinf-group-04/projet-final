@@ -11,7 +11,7 @@
 
 <body class="bg-white">
 
-    <%- include("../components/header.ejs") %>
+    <% include("../components/header.ejs") %>
 
     <div class="max-w-screen-lg p-6 pb-10 mx-auto mt-20 sm:px-6 lg:px-8">
         <div class="p-8 overflow-hidden bg-gray-100 border border-gray-400 rounded-lg shadow-md">
@@ -49,7 +49,15 @@
                     <div>
                         <h2 class="mb-4 text-3xl font-bold text-gray-800">L'Allemand en bd 🇩🇪</h2>
                         <p class="mb-4 text-2xl font-bold text-gray-800">Prix : 20€</p>
-                        <p class="mb-4 text-xl text-gray-600">Vendeur: Olaf Müller</p>
+                        <p class="mb-4 text-xl text-gray-600">
+                            Vendeur: Olaf Müller
+                            <% if (user.role === "admin") { %>
+                                <!-- Affiche ce bouton seulement si l'utilisateur est un administrateur -->
+                                <button class="px-2 py-1 ml-2 text-sm font-bold text-white bg-red-500 rounded-full hover:bg-red-800">
+                                    Ban User
+                                </button>
+                            <% } %>
+                        </p>
                         <p class="mb-4 text-xl text-gray-600">État : Neuf</p>
                         <div class="mb-8">
                             <span class="text-xl font-bold text-gray-700">Description:</span>
@@ -58,14 +66,14 @@
                                 Il est encore neuf, je ne l'ai jamais utilisé.
                             </p>
                         </div>
-                        <% if (user.role === "admin") { %>
-                            <!-- Affiche ce bouton seulement si l'utilisateur est un administrateur -->
-                            <button class="w-full px-6 py-3 mt-4 text-lg font-bold text-white bg-red-500 rounded-full hover:bg-red-800">
-                                Bouton Administrateur
-                            </button>
-                        <% } %>
                     </div>
                     <div>
+                        <% if (user.role === "admin") { %>
+                            <!-- Affiche ce bouton seulement si l'utilisateur est un administrateur -->
+                            <button class="w-full px-6 py-3 mb-4 text-lg font-bold text-white bg-red-500 rounded-full hover:bg-red-800">
+                                Ban ad
+                            </button>
+                        <% } %>
                         <button class="w-full px-6 py-3 text-lg font-bold text-white bg-blue-500 rounded-full hover:bg-blue-800">Je suis intéressé(e)</button>
                     </div>
                 </div>
