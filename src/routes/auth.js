@@ -92,6 +92,7 @@ router.post("/login", async (req, res) => {
     name: userExists.name,
     role: userExists.role,
     email: userExists.email,
+    id: userExists._id,
   };
   req.session.errors = null;
 
