@@ -103,9 +103,9 @@ router.post("/login", async (req, res) => {
 router.get("/register", (req, res) => {
   const errors = req.session.errors;
   const formData = req.session.formData;
-  const loggedIn = req.session.user ? true : false;
+  const user = req.session.user ? true : false;
 
-  res.render("pages/register", { errors, formData, loggedIn });
+  res.render("pages/register", { errors, formData, user });
   req.session.errors = null;
   req.session.formData = null;
 });
