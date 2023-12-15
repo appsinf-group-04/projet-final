@@ -3,21 +3,17 @@ const router = Router();
 const { z } = require("zod");
 const authMiddleware = require("../middlewares/auth");
 
-const { createPost } = require("../database/post");
-const { getUserByEmail } = require("../database/auth");
-
 router.get("/profile/create", authMiddleware.userAuth, (req, res) => {
   const errors = req.session.errors;
   const formData = req.session.formData;
-  const isAuth = req.session.user ? true : false;
   const user = req.session.user;
 
-  res.render("pages/create", { errors, formData, isAuth, user });
+  res.render("pages/create", { errors, formData, user });
   req.session.errors = null;
   req.session.formData = null;
 });
 
-const CreateSchema = z.object({
+const createSchema = z.object({
   title: z.string().min(5).max(40),
   description: z.string().optional(),
   price: z.number().positive(),
@@ -28,7 +24,7 @@ const CreateSchema = z.object({
 router.post("/profile/create", async (req, res) => {
   const body = req.body;
 
-  const zodResult = CreateSchema.safeParse(body);
+  const zodResult = createSchema.safeParse(body);
 
   if (!zodResult.success) {
     const errors = [];

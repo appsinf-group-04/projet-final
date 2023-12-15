@@ -16,10 +16,9 @@ const { logNewLogin } = require("../database/logins");
 router.get("/login", (req, res) => {
   const errors = req.session.errors;
   const formData = req.session.formData;
-  const loggedIn = req.session.user ? true : false;
   const user = req.session.user;
 
-  res.render("pages/login", { errors, formData, loggedIn, user });
+  res.render("pages/login", { errors, formData, user });
   req.session.errors = null;
   req.session.formData = null;
 });
