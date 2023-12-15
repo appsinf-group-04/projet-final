@@ -18,7 +18,7 @@ const postSchema = new Schema({
         type: String,
         default: "",
     },
-    createAt: {
+    createdAt: {
         type: Date,
         default: Date.now,
     },
@@ -35,9 +35,14 @@ const postSchema = new Schema({
         at: Date,
         banned: Boolean,
     },
-    sell: {
+    sold: {
         type: Boolean,
         default: false,
+    },
+    interested: {
+        type: [Schema.Types.ObjectId],
+        ref: "User",
+        default: [],
     },
 });
 
