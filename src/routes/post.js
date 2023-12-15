@@ -44,7 +44,6 @@ router.post("/profile/create", async (req, res) => {
 
     return res.redirect("/profile/create");
   }
-
 });
 
 module.exports = router;
