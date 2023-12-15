@@ -12,7 +12,8 @@ const { getLoginsPerDay: getLoginsByDay } = require("../database/logins");
 
 router.use("/auth", authRouter);
 
-router.get("/", (_, res) => {
+router.get("/", (req, res) => {
+  const user = req.session.user;
   const annonces = [
     {
       seller: "Jean Mahmoud",
@@ -32,10 +33,11 @@ router.get("/", (_, res) => {
 
   const listOfCourses = ["LINFO1212", "LMATH1002", "LCOPS1204"];
 
-  res.render("pages/index", { loggedIn: false, annonces, listOfCourses });
+  res.render("pages/index", { user, annonces, listOfCourses });
 });
 
-router.get("/profile", (_, res) => {
+router.get("/profile", (req, res) => {
+  const user = req.session.user;
   const annonces = [
     {
       img: "/public/images/book_placeholder.png",
@@ -67,15 +69,17 @@ router.get("/profile", (_, res) => {
     },
   ];
 
-  res.render("pages/profile", { loggedIn: false, annonces });
+  res.render("pages/profile", { user, annonces });
 });
 
-router.get("/details", (_, res) => {
-  res.render("pages/details", { loggedIn: false });
+router.get("/details", (req, res) => {
+  const user = req.session.user;
+  res.render("pages/details", { user });
 });
 
-router.get("/profile/create", (_, res) => {
-  res.render("pages/create");
+router.get("/profile/create", (req, res) => {
+  const user = req.session.user;
+  res.render("pages/create", { user });
 });
 
 router.get("/dash", authMiddleware.adminAuth, async (req, res) => {
