@@ -158,7 +158,12 @@ router.post("/register", async (req, res) => {
     zodResult.data.name,
     zodResult.data.profilePicture,
   );
-  req.session.user = { name: user.name, role: user.role };
+  req.session.user = {
+    name: user.name,
+    role: user.role,
+    email: user.email,
+    id: user._id,
+  };
   req.session.errors = null;
 
   await logLogin(zodResult.data.email);
