@@ -16,10 +16,9 @@ const { logNewLogin } = require("../database/logins");
 router.get("/login", (req, res) => {
   const errors = req.session.errors;
   const formData = req.session.formData;
-  const loggedIn = req.session.user ? true : false;
   const user = req.session.user;
 
-  res.render("pages/login", { errors, formData, loggedIn, user });
+  res.render("pages/login", { errors, formData, user });
   req.session.errors = null;
   req.session.formData = null;
 });
@@ -92,6 +91,7 @@ router.post("/login", async (req, res) => {
     name: userExists.name,
     role: userExists.role,
     email: userExists.email,
+    id: userExists._id,
   };
   req.session.errors = null;
 
@@ -158,7 +158,12 @@ router.post("/register", async (req, res) => {
     zodResult.data.name,
     zodResult.data.profilePicture,
   );
-  req.session.user = { name: user.name, role: user.role };
+  req.session.user = {
+    name: user.name,
+    role: user.role,
+    email: user.email,
+    id: user._id,
+  };
   req.session.errors = null;
 
   await logLogin(zodResult.data.email);

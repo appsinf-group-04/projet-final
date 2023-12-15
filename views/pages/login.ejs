@@ -11,12 +11,6 @@
 
   <body class="min-h-screen bg-gray-100">
     <div class="container p-4 mx-auto">
-      <% if (loggedIn) { %>
-        <p class="text-green-500">You are logged in!</p>
-        <p>Name: <%= user.name %></p>
-        <p>Role: <%= user.role %></p>
-      <% } %>
-
       <form method="POST" action="/auth/login" class="max-w-md p-8 mx-auto mt-40 bg-white rounded-lg shadow-md">
         <div class="mb-4">
           <label for="email" class="block text-sm font-medium text-gray-700">Email</label> 
