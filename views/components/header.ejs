@@ -9,7 +9,11 @@
       <% if (!user){ %>
         <a href="/auth/login" class="mx-4 font-semibold transition duration-200 ease-in-out border-b-2 border-transparent hover:border-white">S'identifier</a>
       <% } else { %>
-          <a href="/profile" type="submit" class="mx-4 font-semibold transition duration-200 ease-in-out border-b-2 border-transparent hover:border-white"><%= user.name %></a>
+          <a href="/profile" class="mx-4 font-semibold transition duration-200 ease-in-out border-b-2 border-transparent hover:border-white"><%= user.name %></a>
+
+          <% if(user.role == "admin") {  %>
+            <a href="/dash" class="mx-4 font-semibold transition duration-200 ease-in-out border-b-2 border-transparent hover:border-white">Admin Space</a>
+          <% } %>
       <% } %>
     </nav>
   </div>
