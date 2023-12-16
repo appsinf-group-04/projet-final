@@ -119,6 +119,7 @@ router.get("/dash", authMiddleware.adminAuth, async (req, res) => {
     bans,
     query,
     loginsByDay,
+    user: req.session.user,
   });
 });
 
