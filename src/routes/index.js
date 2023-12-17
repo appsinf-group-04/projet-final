@@ -29,7 +29,7 @@ router.get("/", async (req, res) => {
 });
 
 // Profile page
-router.get("/profile", (req, res) => {
+router.get("/profile", authMiddleware.userAuth, (req, res) => {
   const user = req.session.user;
   const annonces = [
     {
