@@ -51,6 +51,8 @@ async function getAllPosts(){
     postsResult.push(post);
   }
   
+  // reverse the posts list to have the last ones displayed first on the index page
+  postsResult.reverse();
   return postsResult;
 }
 
