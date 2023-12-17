@@ -1,6 +1,7 @@
 const crypto = require("crypto");
 
 const UserModel = require("../models/user");
+const PostModel = require("../models/post");
 const { logNewLogin } = require("./logins");
 const { formatDate } = require("../utils/utils");
 
@@ -26,6 +27,21 @@ async function createUser(email, password, phone, name, profilePicture) {
   await user.save();
 
   return user;
+}
+
+// return and add a post to the db
+async function createPost(title, price, state, description) {
+  const post = new PostModel({
+    title: title,
+    price: price,
+    state: state,
+    description: description,
+    refUser: ";..",
+  });
+
+  await user.save();
+
+  return post;
 }
 
 async function testPassword(email, password) {

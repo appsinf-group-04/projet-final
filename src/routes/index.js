@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const authRouter = require("./auth");
+const postRouter = require("./post");
 const authMiddleware = require("../middlewares/auth");
 const {
   getAccountsCreatedByDay,
@@ -11,6 +12,7 @@ const { formatDate } = require("../utils/utils");
 const { getLoginsPerDay: getLoginsByDay } = require("../database/logins");
 
 router.use("/auth", authRouter);
+router.use("/", postRouter);
 
 router.get("/", (req, res) => {
   const user = req.session.user;

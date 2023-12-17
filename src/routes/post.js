@@ -23,6 +23,10 @@ const createSchema = z.object({
 
 router.post("/profile/create", async (req, res) => {
   const body = req.body;
+  
+  // convert form price from string to int
+  body.price = parseInt(body.price);
+  console.log(body);
 
   const zodResult = createSchema.safeParse(body);
 
@@ -38,8 +42,11 @@ router.post("/profile/create", async (req, res) => {
     req.session.errors = errors;
     req.session.formData = body;
 
+    console.log(req.session.errors)
+
     return res.redirect("/profile/create");
   }
+  return res.redirect("/");
 });
 
 module.exports = router;
