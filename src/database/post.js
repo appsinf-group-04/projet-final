@@ -45,6 +45,7 @@ async function getAllPosts(){
       title: postsFromDB[i].title,
       price: postsFromDB[i].price,
       state: postsFromDB[i].state,
+      description: postsFromDB[i].description,
       seller: seller.name,
       sellerRating: getMean(seller.ranking)
     }
