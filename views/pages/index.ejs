@@ -59,7 +59,7 @@
               
               <div class="flex flex-row justify-between pb-2">
                 <!-- Replacer href avec id de l'annonce pour la page -->
-                <a href="#" class="text-2xl font-semibold"><%= posts[i].title %></a>
+                <a href="/post/<%= posts[i].postID %>" class="text-2xl font-semibold"><%= posts[i].title %></a>
                 <span class="text-2xl font-bold"><%= posts[i].price %>€</span>
               </div>
               <span><%= posts[i].seller %> <%= posts[i].sellerRating %>/5</span>

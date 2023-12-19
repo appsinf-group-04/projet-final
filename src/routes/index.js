@@ -8,7 +8,10 @@ const {
   getAccountsOverTime,
 } = require("../database/stats");
 
-const {getAllPosts} = require("../database/post")
+const {
+  getAllPosts,
+  getOnePost
+} = require("../database/post")
 
 const { getLatestBannedUsers, searchBannedUsers } = require("../database/auth");
 const { formatDate } = require("../utils/utils");

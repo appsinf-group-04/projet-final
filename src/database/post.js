@@ -46,8 +46,10 @@ async function getAllPosts(){
       price: postsFromDB[i].price,
       state: postsFromDB[i].state,
       description: postsFromDB[i].description,
+      pictures: postsFromDB[i].pictures,
       seller: seller.name,
-      sellerRating: getMean(seller.ranking)
+      sellerRating: getMean(seller.ranking),
+      postID: postsFromDB[i]._id
     }
     postsResult.push(post);
   }
@@ -57,8 +59,29 @@ async function getAllPosts(){
   return postsResult;
 }
 
+// return a post with seller informations given one post ID
+async function getOnePost(postID){
+  const postFromDB = await PostModel.findById(postID);
+  let seller = await UserModel.findById(postFromDB.refUser)
+  console.log(postFromDB);
+
+  let post = {
+    title: postFromDB.title,
+    price: postFromDB.price,
+    state: postFromDB.state,
+    description: postFromDB.description,
+    pictures: postFromDB.pictures,
+    seller: seller.name,
+    sellerRating: getMean(seller.ranking),
+    postID: postFromDB._id
+  }
+
+  return post;
+}
+
 
 module.exports = {
   createPost,
-  getAllPosts
+  getAllPosts,
+  getOnePost
 };
