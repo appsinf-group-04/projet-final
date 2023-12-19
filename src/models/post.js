@@ -25,10 +25,6 @@ const postSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: "User",
   },
-  seller: {
-    type: String,
-    default: "Inconnu"
-  },
   pictures: {
     type: [String],
     default: [],
@@ -38,7 +34,7 @@ const postSchema = new Schema({
     at: Date,
     banned: {
       type: Boolean,
-      default: false
+      default: false,
     },
   },
   sold: {

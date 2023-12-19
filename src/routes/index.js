@@ -8,10 +8,7 @@ const {
   getAccountsOverTime,
 } = require("../database/stats");
 
-const {
-  getAllPosts,
-  getOnePost
-} = require("../database/post")
+const { getPosts } = require("../database/post");
 
 const { getLatestBannedUsers, searchBannedUsers } = require("../database/auth");
 const { formatDate } = require("../utils/utils");
@@ -20,13 +17,11 @@ const { getLoginsPerDay: getLoginsByDay } = require("../database/logins");
 router.use("/auth", authRouter);
 router.use("/", postRouter);
 
-
 // Index page
 router.get("/", async (req, res) => {
-  
   const user = req.session.user;
   const listOfCourses = ["LINFO1212", "LMATH1002", "LCOPS1204"];
-  posts = await getAllPosts();
+  const posts = await getPosts(20);
 
   res.render("pages/index", { user, posts, listOfCourses });
 });
