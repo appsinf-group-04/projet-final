@@ -13,15 +13,20 @@
     <%- include("../components/header.ejs") %>
 
     <div class="px-14 py-10">
-      <h1 class="text-xl font-semibold">Graphs</h1>
-      <div style="width: 800px;"><canvas id="accounts"></canvas></div>
-      <div style="width: 800px;"><canvas id="bans"></canvas></div>
-      <div style="width: 800px;"><canvas id="logins"></canvas></div>
-      <div style="width: 800px;"><canvas id="posts"></canvas></div>
-      <div style="width: 800px;"><canvas id="posts2"></canvas></div>
+      <h1 class="text-3xl font-semibold mb-2">Website informations</h1>
+
+      <div class="flex md:flex-row flex-col">
+        <div class="md:w-1/2 w-full"><canvas id="accounts"></canvas></div>
+        <div class="md:w-1/2 w-full"><canvas id="bans"></canvas></div>
+      </div>
+
+      <div class="flex md:flex-row flex-col">
+        <div class="md:w-1/2 w-full"><canvas id="logins"></canvas></div>
+        <div class="md:w-1/2 w-full"><canvas id="posts"></canvas></div>
+      </div>
 
       <div class="flex items-center justify-between pt-16">
-        <h1 class="text-xl font-semibold">
+        <h1 class="text-3xl font-semibold">
           <%= query ? "Recherche Bans" : "Latest Bans" %>
         </h1>
         
@@ -70,13 +75,11 @@
       const accountsOverTime = JSON.parse('<%- JSON.stringify(accountsOverTime) %>');
       const loginsByDay = JSON.parse('<%- JSON.stringify(loginsByDay) %>');
       const postsByDay = JSON.parse('<%- JSON.stringify(postsByDay) %>');
-      const postsOverTime = JSON.parse('<%- JSON.stringify(postsOverTime) %>');
 
       createAccountsByDayGraph("accounts", accountsByDay);
       createOverTimeGraph("bans", bansOverTime, accountsOverTime);
       createLoginsByDayGraph("logins", loginsByDay);
       createPostsByDayGraph("posts", postsByDay);
-      createPostsOverTimeGraph("posts2", postsOverTime);
     </script>
   </body>
 </html>
