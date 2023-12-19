@@ -84,7 +84,7 @@ router.get("/profile/create", (req, res) => {
   res.render("pages/create", { user });
 });
 
-router.get("/dash", async (req, res) => {
+router.get("/dash", authMiddleware.adminAuth, async (req, res) => {
   const query = req.query.q;
 
   const accountsByDay = await getAccountsCreatedByDay();
@@ -92,7 +92,6 @@ router.get("/dash", async (req, res) => {
   const accountsOverTime = await getAccountsOverTime();
   const loginsByDay = await getLoginsByDay();
   const postsByDay = await getPostsCreatedByDay();
-  const postsOverTime = await getPostsOverTime();
 
   let bans = [];
   if (query) {
@@ -124,7 +123,6 @@ router.get("/dash", async (req, res) => {
     query,
     loginsByDay,
     postsByDay,
-    postsOverTime,
     user: req.session.user,
   });
 });

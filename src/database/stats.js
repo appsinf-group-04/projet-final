@@ -111,19 +111,6 @@ async function getPostsCreatedByDay() {
   return final;
 }
 
-async function getPostsOverTime() {
-  const data = await getPostsCreatedByDay();
-  const postsOverTime = [];
-  let total = 0;
-
-  for (const day of data) {
-    total += day.count;
-    postsOverTime.push({ date: day.date, count: total });
-  }
-
-  return postsOverTime;
-}
-
 async function getBansOverTime() {
   const data = await getBansByDay();
 
@@ -194,5 +181,4 @@ module.exports = {
   getBansOverTime,
   getBansByDay,
   getAccountsOverTime,
-  getPostsOverTime,
 };
