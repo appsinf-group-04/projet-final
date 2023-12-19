@@ -22,6 +22,23 @@ async function getPosts(limit) {
     .populate("refUser")
     .exec();
 
+  posts.map((p) => {
+    switch (p.state) {
+      case "great":
+        p.state = "Très bon";
+        break;
+      case "good":
+        p.state = "Bon";
+        break;
+      case "ok":
+        p.state = "Ok";
+        break;
+      case "used":
+        p.state = "Usé";
+        break;
+    }
+  });
+
   return posts;
 }
 
@@ -30,6 +47,22 @@ async function getPost(postID) {
     .findById(postID)
     .populate("refUser")
     .exec();
+
+  switch (post.state) {
+    case "great":
+      post.state = "Très bon";
+      break;
+    case "good":
+      post.state = "Bon";
+      break;
+    case "ok":
+      post.state = "Ok";
+      break;
+    case "used":
+      post.state = "Usé";
+      break;
+  }
+
 
   return post;
 }
