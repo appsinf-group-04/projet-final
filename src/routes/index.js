@@ -5,6 +5,8 @@ const {
   getAccountsCreatedByDay,
   getBansOverTime,
   getAccountsOverTime,
+  getPostsCreatedByDay,
+  getPostsOverTime,
 } = require("../database/stats");
 const { getLatestBannedUsers, searchBannedUsers } = require("../database/auth");
 const { formatDate } = require("../utils/utils");
@@ -82,13 +84,15 @@ router.get("/profile/create", (req, res) => {
   res.render("pages/create", { user });
 });
 
-router.get("/dash", authMiddleware.adminAuth, async (req, res) => {
+router.get("/dash", async (req, res) => {
   const query = req.query.q;
 
   const accountsByDay = await getAccountsCreatedByDay();
   const bansOverTime = await getBansOverTime();
   const accountsOverTime = await getAccountsOverTime();
   const loginsByDay = await getLoginsByDay();
+  const postsByDay = await getPostsCreatedByDay();
+  const postsOverTime = await getPostsOverTime();
 
   let bans = [];
   if (query) {
@@ -119,6 +123,8 @@ router.get("/dash", authMiddleware.adminAuth, async (req, res) => {
     bans,
     query,
     loginsByDay,
+    postsByDay,
+    postsOverTime,
     user: req.session.user,
   });
 });

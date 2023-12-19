@@ -1,3 +1,40 @@
+function createPostsByDayGraph(selector, data) {
+  const element = document.getElementById(selector);
+
+  new Chart(
+    element,
+    {
+      type: 'line',
+      data: {
+        datasets: [
+          {
+            label: 'Posts created',
+            data: data.map((i) => ({ x: i.date, y: i.count })),
+          }
+        ]
+      }
+    }
+  );
+}
+
+function createPostsOverTimeGraph(selector, data) {
+  const element = document.getElementById(selector);
+  new Chart(
+    element,
+    {
+      type: 'line',
+      data: {
+        datasets: [
+          {
+            label: 'Posts created',
+            data: data.map((i) => ({ x: i.date, y: i.count })),
+          }
+        ]
+      }
+    }
+  );
+}
+
 function createAccountsByDayGraph(selector, data) {
   const element = document.getElementById(selector);
   new Chart(

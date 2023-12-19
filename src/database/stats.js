@@ -1,5 +1,5 @@
-const { array } = require("zod");
 const UserModel = require("../models/user");
+const PostModel = require("../models/post");
 const { formatDate, getNextDay } = require("../utils/utils");
 
 async function getAccountsCreatedByDay() {
@@ -66,11 +66,62 @@ async function getAccountsOverTime() {
 }
 
 async function getPostsCreatedByDay() {
-  //TODO: implement this function whe you have a Post model
+  const posts = await PostModel.find({});
+
+  const postsByDay = [];
+  for (const post of posts) {
+    const date = post.createdAt;
+    const dateFormatted = formatDate(date);
+
+    const existingDay = postsByDay.find((day) => day.date === dateFormatted);
+
+    if (existingDay) {
+      existingDay.count += 1;
+    } else {
+      postsByDay.push({ date: dateFormatted, count: 1 });
+    }
+  }
+
+  postsByDay.sort((a, b) => {
+    const dateA = a.date.split("/").reverse().join("-");
+    const dateB = b.date.split("/").reverse().join("-");
+    return new Date(dateA) - new Date(dateB);
+  });
+
+  const final = [];
+
+  for (let i = 0; i < postsByDay.length - 1; i++) {
+    let date = new Date(postsByDay[i].date.split("/").reverse().join("-"));
+    const nextArrayDate = new Date(
+      postsByDay[i + 1].date.split("/").reverse().join("-"),
+    );
+
+    final.push(postsByDay[i]);
+
+    while (getNextDay(date) < nextArrayDate) {
+      date = getNextDay(date);
+      final.push({ date: formatDate(date), count: 0 });
+    }
+  }
+
+  if (postsByDay.length > 0) {
+    final.push(postsByDay[postsByDay.length - 1]);
+  }
+
+  return final;
 }
 
-async function getActivePosts() {
-  //TODO: implement this function whe you have a Post model
+async function getPostsOverTime() {
+  const data = await getPostsCreatedByDay();
+  const postsOverTime = [];
+  let total = 0;
+
+  for (const day of data) {
+    total += day.count;
+    postsOverTime.push({ date: day.date, count: total });
+  }
+
+  return postsOverTime;
 }
 
 async function getBansOverTime() {
@@ -140,8 +191,8 @@ async function getBansByDay() {
 module.exports = {
   getAccountsCreatedByDay,
   getPostsCreatedByDay,
-  getActivePosts,
   getBansOverTime,
   getBansByDay,
   getAccountsOverTime,
+  getPostsOverTime,
 };
