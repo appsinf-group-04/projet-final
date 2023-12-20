@@ -29,7 +29,7 @@
                 </div>
 
                 <label for="objectName" class="block mb-2">Titre :</label>
-                <input type="text" id="objectName" name="title" class="w-full p-2 mb-4 border rounded-md" required value="<%= formData ? formData['title'] : '' %>">
+                <input type="text" id="title" name="title" class="w-full p-2 mb-4 border rounded-md" required value="<%= formData ? formData['title'] : '' %>">
                 <% if (errors && errors.some(e => e.path=="title")) { %>
                   <p class="text-red-500"><%= errors.find(e => e.path=="title").message %></p>
                 <% } %>
@@ -52,7 +52,7 @@
                 <% } %>
 
                 <label for="description" class="block mb-2">Description (facultative) :</label>
-                <textarea id="description" name="description" class="w-full p-2 mb-4 border rounded-md resize-none"><%= formData ? formData['description'] : '' %></textarea>
+                <textarea id="description" name="description" placeholder="Veuillez renseigner toutes autres informations pertinentes, telles que : la faculté, l'auteur, l'année, etc." class="w-full p-2 mb-4 border rounded-md resize-none"><%= formData ? formData['description'] : '' %></textarea>
                 <% if (errors && errors.some(e => e.path=="description")) { %>
                   <p class="text-red-500"><%= errors.find(e => e.path=="description").message %></p>
                 <% } %>
