@@ -3,7 +3,6 @@ const express = require("express");
 const session = require("express-session");
 const mongoose = require("mongoose");
 
-
 const { getPosts, createPost, getPost } = require("./database/post");
 
 const app = express();
