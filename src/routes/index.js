@@ -10,7 +10,7 @@ const {
   getPostsOverTime,
 } = require("../database/stats");
 
-const { getPosts } = require("../database/post");
+const { getPosts, getPostForUser } = require("../database/post");
 
 const { getLatestBannedUsers, searchBannedUsers } = require("../database/auth");
 const { formatDate } = require("../utils/utils");
@@ -29,46 +29,10 @@ router.get("/", async (req, res) => {
 });
 
 // Profile page
-router.get("/profile", authMiddleware.userAuth, (req, res) => {
+router.get("/profile", authMiddleware.userAuth, async (req, res) => {
   const user = req.session.user;
-  const annonces = [
-    {
-      img: "/public/images/book_placeholder.png",
-      seller: "Jean Mahmoud",
-      objectName: "Livre de math",
-      price: 11,
-      state: "Nul à chier",
-    },
-    {
-      img: "/public/images/book_placeholder.png",
-      seller: "Abdul Kader",
-      objectName: "Livre d'anglais",
-      price: 40,
-      state: "Très bon",
-    },
-    {
-      img: "/public/images/book_placeholder.png",
-      seller: "Max Günter",
-      objectName: "Livre d'allemand",
-      price: 35,
-      state: "Bon",
-    },
-    {
-      img: "/public/images/book_placeholder.png",
-      seller: "Olaf Müller",
-      objectName: "Livre d'histoire",
-      price: 65,
-      state: "Très bon",
-    },
-  ];
-
-  res.render("pages/profile", { user, annonces });
-});
-
-// details page for each post
-router.get("/details", (req, res) => {
-  const user = req.session.user;
-  res.render("pages/details", { user });
+  const posts = await getPostForUser(user.id);
+  res.render("pages/profile", { user, posts });
 });
 
 router.get("/profile/create", (req, res) => {
