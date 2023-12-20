@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const authRouter = require("./auth");
+const postRouter = require("./post");
 const authMiddleware = require("../middlewares/auth");
 const {
   getAccountsCreatedByDay,
@@ -8,37 +9,27 @@ const {
   getPostsCreatedByDay,
   getPostsOverTime,
 } = require("../database/stats");
+
+const { getPosts } = require("../database/post");
+
 const { getLatestBannedUsers, searchBannedUsers } = require("../database/auth");
 const { formatDate } = require("../utils/utils");
 const { getLoginsPerDay: getLoginsByDay } = require("../database/logins");
 
 router.use("/auth", authRouter);
+router.use("/", postRouter);
 
-router.get("/", (req, res) => {
+// Index page
+router.get("/", async (req, res) => {
   const user = req.session.user;
-  const annonces = [
-    {
-      seller: "Jean Mahmoud",
-      sellerRating: 2.11,
-      objectName: "Livre de math",
-      price: 11,
-      state: "Nul à chier",
-    },
-    {
-      seller: "Abdul Kader",
-      sellerRating: 4,
-      objectName: "Livre d'anglais",
-      price: 40,
-      state: "Très bon",
-    },
-  ];
-
   const listOfCourses = ["LINFO1212", "LMATH1002", "LCOPS1204"];
+  const posts = await getPosts(20);
 
-  res.render("pages/index", { user, annonces, listOfCourses });
+  res.render("pages/index", { user, posts, listOfCourses });
 });
 
-router.get("/profile", (req, res) => {
+// Profile page
+router.get("/profile", authMiddleware.userAuth, (req, res) => {
   const user = req.session.user;
   const annonces = [
     {
@@ -74,6 +65,7 @@ router.get("/profile", (req, res) => {
   res.render("pages/profile", { user, annonces });
 });
 
+// details page for each post
 router.get("/details", (req, res) => {
   const user = req.session.user;
   res.render("pages/details", { user });
@@ -84,6 +76,7 @@ router.get("/profile/create", (req, res) => {
   res.render("pages/create", { user });
 });
 
+// Admin dashboard page
 router.get("/dash", authMiddleware.adminAuth, async (req, res) => {
   const query = req.query.q;
 

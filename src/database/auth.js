@@ -1,6 +1,7 @@
 const crypto = require("crypto");
 
 const UserModel = require("../models/user");
+const PostModel = require("../models/post");
 const { logNewLogin } = require("./logins");
 const { formatDate } = require("../utils/utils");
 

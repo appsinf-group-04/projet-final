@@ -7,17 +7,21 @@
   <link href="/public/css/output.css" rel="stylesheet">
 </head>
 
-<body>
+<body class="bg-gray-100">
 
   <%- include("../components/header.ejs") %>
 
-  <button id="toggleFiltresButton" class="block px-4 py-2 m-4 mx-auto text-white bg-blue-500 rounded-md lg:hidden">Afficher les filtres</button>
+  <button id="toggleFiltresButton" class="block px-4 py-2 m-4 mx-auto text-white bg-blue-900 rounded-md lg:hidden">Afficher les filtres</button>
+  <div class="flex justify-center mt-4">
+    <h2 class="w-1/5 hidden lg:block p-4 text-4xl font-semibold text-center">Filtres</h2>
+    <h2 id="annoncesDeVentes" class="block w-3/5 p-4 text-4xl font-semibold text-center">Annonces de ventes</h2>
+  </div>
 
-  <main class="flex justify-center mt-10 lg:mx-1/5">
+  <main class="flex justify-center items-start mt-4 lg:mx-1/5">
     
     <!-- Filtres de recherches -->
-    <section id="filtresSection" class="hidden bg-gray-100 border-2 border-gray-200 border-solid rounded-md lg:w-1/5 lg:block">
-      <h2 class="p-4 text-xl font-semibold text-center">Recherche et Filtres</h2>
+    <section id="filtresSection" class="hidden bg-white border-solid rounded-md lg:w-1/5 lg:block shadow-md">
+      
       <form action="#" method="get" id="filtres" class="flex flex-col items-center justify-start py-4 max-w-prose">
         <input type="search" name="Search" placeholder="Recherche" id="search-bar"
         class="block py-2 pl-3 mb-4 leading-normal text-gray-900 border-0 rounded-md h-fit ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset">
@@ -46,24 +50,29 @@
     
     <!-- Annonces -->
     <section id="announcesSection" class="w-full lg:w-3/5">
-      <h2 class="p-4 text-4xl font-semibold text-center">Annonces</h2>
       
       <div class="flex flex-col items-center justify-center">
-        <% for(var i=0; i < annonces.length; i++) { %>
-          <div class="flex flex-row w-4/5 p-4 my-4 bg-gray-100 border-black rounded-md shadow-md">
-            <img src="#" class="object-cover w-32 h-32 md:w-40 md:h-40">
-            <div class="flex flex-col w-full px-4">
-              
-              <div class="flex flex-row justify-between pb-2">
-                <!-- Replacer href avec id de l'annonce pour la page -->
-                <a href="#" class="text-2xl font-semibold"><%= annonces[i].objectName %></a>
-                <span class="text-2xl font-bold"><%= annonces[i].price %>€</span>
+        <% for(var i=0; i < posts.length; i++) { %>
+          <a href="/post/<%= posts[i].postID %>" class="w-full h-full px-4">
+            <div class="flex flex-row w-4/5 p-4 mb-8 bg-white border-black rounded-md shadow-md">
+              <img src="<%= posts[i].pictures.length > 0 ? posts[i].pictures[0] : 'public/images/book_placeholder.png' %>" class="object-cover w-32 h-32 md:w-40 md:h-40">
+              <div class="flex flex-col w-full px-4">
+                
+                <div class="flex flex-row justify-between pb-2">
+                  <h1 class="text-2xl font-semibold"><%= posts[i].title %></h1>
+                  <span class="text-2xl font-bold"><%= posts[i].price %>€</span>
+                </div>
+                <span><%= posts[i].seller %> <%= 
+                    (posts[i].refUser.ranking.length > 0)
+                    ? "Note: " + (posts[i].refUser.ranking.reduce((sum, num) => sum + num, 0) / posts[i].refUser.ranking.length) + "/5"
+                    : "Aucune note"
+                %></span>
+                <span>État: <%= posts[i].state %></span>
+                <span>Description: <%= posts[i].description %></span>
               </div>
-              <span><%= annonces[i].seller %> <%= annonces[i].sellerRating %>/5</span>
-              <span>état : <%= annonces[i].state %></span>
-            </div>
 
-          </div>
+            </div>
+          </a>
         <% } %>
     </div>
 
