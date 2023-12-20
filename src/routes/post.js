@@ -3,7 +3,7 @@ const router = Router();
 const { z } = require("zod");
 const authMiddleware = require("../middlewares/auth");
 
-const { createPost, setPictures } = require("../database/post");
+const { createPost, setPictures, getPost } = require("../database/post");
 
 router.get("/profile/create", authMiddleware.userAuth, (req, res) => {
   const errors = req.session.errors;
@@ -63,6 +63,13 @@ router.post("/profile/create", authMiddleware.userAuth, async (req, res) => {
   req.session.formData = null;
   req.session.errors = null;
   return res.redirect("/");
+});
+
+router.get("/post/:id", async (req, res) => {
+  const id = req.params.id;
+  const post = await getPost(id)
+  
+  return res.render("pages/details", { post, user : req.session.user })
 });
 
 module.exports = router;
