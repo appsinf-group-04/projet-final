@@ -34,10 +34,12 @@ document.addEventListener("DOMContentLoaded", function() {
   const filtresSection = document.getElementById("filtresSection");
   const toggleFiltresButton = document.getElementById("toggleFiltresButton");
   const announcesSection = document.getElementById("announcesSection");
+  const postsH2 = document.getElementById("annoncesDeVentes");
 
   toggleFiltresButton.addEventListener("click", function() {
     filtresSection.classList.toggle("hidden");
     filtresSection.classList.toggle("w-3/5")
     announcesSection.classList.toggle("hidden")
+    postsH2.classList.toggle('hidden')
   });
 });

@@ -32,7 +32,10 @@ const postSchema = new Schema({
   ban: {
     reason: String,
     at: Date,
-    banned: Boolean,
+    banned: {
+      type: Boolean,
+      default: false,
+    },
   },
   sold: {
     type: Boolean,

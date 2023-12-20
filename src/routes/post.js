@@ -3,6 +3,8 @@ const router = Router();
 const { z } = require("zod");
 const authMiddleware = require("../middlewares/auth");
 
+const { createPost, setPictures } = require("../database/post");
+
 router.get("/profile/create", authMiddleware.userAuth, (req, res) => {
   const errors = req.session.errors;
   const formData = req.session.formData;
@@ -13,16 +15,19 @@ router.get("/profile/create", authMiddleware.userAuth, (req, res) => {
   req.session.formData = null;
 });
 
+const states = z.enum(["great", "good", "ok", "used"]);
 const createSchema = z.object({
   title: z.string().min(5).max(40),
   description: z.string().optional(),
   price: z.number().positive(),
-  state: z.string(),
+  state: states,
   image: z.array(z.string()).optional(),
 });
 
-router.post("/profile/create", async (req, res) => {
+router.post("/profile/create", authMiddleware.userAuth, async (req, res) => {
   const body = req.body;
+
+  body.price = parseInt(body.price);
 
   const zodResult = createSchema.safeParse(body);
 
@@ -40,6 +45,24 @@ router.post("/profile/create", async (req, res) => {
 
     return res.redirect("/profile/create");
   }
+
+  const userID = req.session.user.id;
+
+  // add a post to the db
+  const post = await createPost(
+    zodResult.data.title,
+    zodResult.data.price,
+    zodResult.data.state,
+    zodResult.data.description,
+    userID,
+  );
+
+  const images = JSON.parse(req.body.base64);
+  await setPictures(post.id, images);
+
+  req.session.formData = null;
+  req.session.errors = null;
+  return res.redirect("/");
 });
 
 module.exports = router;
