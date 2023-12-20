@@ -67,9 +67,9 @@ router.post("/profile/create", authMiddleware.userAuth, async (req, res) => {
 
 router.get("/post/:id", async (req, res) => {
   const id = req.params.id;
-  const post = await getPost(id)
-  
-  return res.render("pages/details", { post, user : req.session.user })
+  const post = await getPost(id);
+
+  return res.render("pages/details", { post, user: req.session.user });
 });
 
 module.exports = router;
