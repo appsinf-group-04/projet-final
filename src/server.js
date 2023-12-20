@@ -3,13 +3,14 @@ const express = require("express");
 const session = require("express-session");
 const mongoose = require("mongoose");
 
-const PostModel = require("./models/post");
+const { getPosts, createPost, getPost } = require("./database/post");
+
 const app = express();
 
 app
   .set("view engine", "ejs")
-  .use(express.json())
-  .use(express.urlencoded({ extended: true }))
+  .use(express.json({ limit: "50mb" }))
+  .use(express.urlencoded({ extended: true, limit: "50mb" }))
   .use(
     session({
       secret: "secret",
@@ -26,16 +27,8 @@ app.listen(process.env.PORT || 8080, () => {
   mongoose
     .connect("mongodb://127.0.0.1:27017/projet-final")
     .then(() => console.log("Connected to MongoDB"))
-    .then(
-      async () =>
-        await new PostModel({
-          title: "Hello World",
-          price: 10,
-          state: "Good",
-          description: "This is a description",
-          createdAt: Date.now(),
-          refUser: "6578c44d59fd97756646677d",
-        }),
-    )
+    .then(async () => {
+      const post = await getPost("6581bde93e21d2fd5d6e5380");
+    })
     .catch((err) => console.log(err));
 });
