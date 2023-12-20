@@ -6,6 +6,8 @@ const {
   getAccountsCreatedByDay,
   getBansOverTime,
   getAccountsOverTime,
+  getPostsCreatedByDay,
+  getPostsOverTime,
 } = require("../database/stats");
 
 const { getPosts } = require("../database/post");
@@ -82,6 +84,7 @@ router.get("/dash", authMiddleware.adminAuth, async (req, res) => {
   const bansOverTime = await getBansOverTime();
   const accountsOverTime = await getAccountsOverTime();
   const loginsByDay = await getLoginsByDay();
+  const postsByDay = await getPostsCreatedByDay();
 
   let bans = [];
   if (query) {
@@ -112,6 +115,7 @@ router.get("/dash", authMiddleware.adminAuth, async (req, res) => {
     bans,
     query,
     loginsByDay,
+    postsByDay,
     user: req.session.user,
   });
 });

@@ -1,6 +1,6 @@
 const UserModel = require("../models/user");
+const PostModel = require("../models/post");
 const { logNewLogin } = require("../database/logins");
-const { formatDate } = require("./utils");
 
 async function unpopulateUserDB(fakeUsers) {
   for (const email of fakeUsers) {
@@ -40,8 +40,41 @@ async function populateUserDB(amountToFake) {
   return fakers;
 }
 
+async function populatePostsDB(amountToFake, userId) {
+  const fakers = [];
+
+  for (let i = 0; i < amountToFake; i++) {
+    const randomDay = Math.floor(Math.random() * 20);
+    const createdAt = new Date(Date.now() - randomDay * 864e5);
+    const sold = Math.random();
+
+    const post = new PostModel({
+      title: `Fake Post ${i}`,
+      price: Math.floor(Math.random() * 1000),
+      state: "new",
+      description: "This is a fake post",
+      createdAt: createdAt,
+      refUser: userId,
+      sold: sold > 0.5,
+    });
+
+    await post.save();
+
+    fakers.push(post._id);
+  }
+
+  return fakers;
+}
+
+async function unpopulatePostsDB(fakePosts) {
+  for (const postId of fakePosts) {
+    await PostModel.findByIdAndDelete(postId);
+  }
+}
+
 module.exports = {
   populateUserDB,
   unpopulateUserDB,
-  reallyPopulateUserDB: populateUserDB,
+  populatePostsDB,
+  unpopulatePostsDB,
 };
