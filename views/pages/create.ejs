@@ -13,14 +13,18 @@
     <div class="container mx-auto mt-10">
         <div class="p-8 mx-auto bg-white rounded-lg shadow-md max-w-7xl">
             <h1 class="mb-4 text-xl font-bold">Créer une Annonce</h1>
-            <form action="/profile/create" method="POST">
+            <form action="/profile/create" method="POST" id="form">
                 <div class="flex mb-4">
-                    <label for="imgFile" class="mr-2">Déposer les images (5) :</label>
+                    <label for="imgFilee" class="mr-2">Déposer les images (5) :</label>
                     <div class="relative">
-                        <label for="fileInput" class="px-2 py-1 text-white bg-blue-500 rounded-md cursor-pointer">
+                        <label for="imgFile" class="px-2 py-1 text-white bg-blue-500 rounded-md cursor-pointer">
                             Choisir un fichier
                         </label>
-                        <input type="file" id="fileInput" name="imgFile" class="hidden" accept="image/*">
+                        <input type="file" id="imgFile" name="images" class="hidden" accept="image/*" multiple>
+                        <input type="hidden" id="base64" name="base64">
+                        <% if (errors) { %>
+                          <p class="text-red-500">Select your images back</p>
+                        <% } %>
                     </div>
                 </div>
 
@@ -54,12 +58,45 @@
                 <% } %>
 
                 <div class="flex justify-between">
-                    <button type="submit" class="px-2 py-1 text-white bg-blue-500 rounded-md">Créer l'annonce</button>
+                    <input type="button" class="px-2 py-1 text-white bg-blue-500 rounded-md" onclick="uploadImages()" value="Créer l'annonce">
                     <a href="/profile" class="px-2 py-1 ml-auto text-gray-500 bg-gray-200 rounded-md">Annuler</a>
                 </div>
             </form>
         </div>
     </div>
 
+    <script>
+      function uploadImages() {
+          var fileInput = document.getElementById('imgFile');
+          var base64Input = document.getElementById('base64');
+          var files = fileInput.files;
+          var base64Array = [];
+
+          function readAndEncode(index) {
+              if (index < files.length) {
+                  var reader = new FileReader();
+
+                  reader.onload = function(e) {
+                      var base64String = e.target.result;
+                      base64Array.push(base64String);
+
+                      // Continue to the next file
+                      readAndEncode(index + 1);
+                  };
+
+                  reader.readAsDataURL(files[index]);
+              } else {
+                  // All files are processed, set the value of the hidden input
+                  base64Input.value = JSON.stringify(base64Array);
+
+                  // Now you can submit the form
+                  document.getElementById('form').submit();
+              }
+          }
+
+          // Start the process with the first file
+          readAndEncode(0);
+      }
+    </script>
 </body>
 </html>

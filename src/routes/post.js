@@ -3,7 +3,7 @@ const router = Router();
 const { z } = require("zod");
 const authMiddleware = require("../middlewares/auth");
 
-const { createPost } = require("../database/post");
+const { createPost, setPictures } = require("../database/post");
 
 router.get("/profile/create", authMiddleware.userAuth, (req, res) => {
   const errors = req.session.errors;
@@ -49,7 +49,7 @@ router.post("/profile/create", authMiddleware.userAuth, async (req, res) => {
   const userID = req.session.user.id;
 
   // add a post to the db
-  await createPost(
+  const post = await createPost(
     zodResult.data.title,
     zodResult.data.price,
     zodResult.data.state,
@@ -57,6 +57,11 @@ router.post("/profile/create", authMiddleware.userAuth, async (req, res) => {
     userID,
   );
 
+  const images = JSON.parse(req.body.base64);
+  await setPictures(post.id, images);
+
+  req.session.formData = null;
+  req.session.errors = null;
   return res.redirect("/");
 });
 

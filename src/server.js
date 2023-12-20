@@ -9,8 +9,8 @@ const app = express();
 
 app
   .set("view engine", "ejs")
-  .use(express.json())
-  .use(express.urlencoded({ extended: true }))
+  .use(express.json({ limit: "50mb" }))
+  .use(express.urlencoded({ extended: true, limit: "50mb" }))
   .use(
     session({
       secret: "secret",

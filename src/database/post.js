@@ -15,8 +15,7 @@ async function createPost(title, price, state, description, userID) {
 }
 
 async function getPosts(limit) {
-  const posts = await PostModel
-    .find({})
+  const posts = await PostModel.find({})
     .sort({ createdAt: -1 })
     .limit(limit)
     .populate("refUser")
@@ -43,10 +42,7 @@ async function getPosts(limit) {
 }
 
 async function getPost(postID) {
-  const post = await PostModel
-    .findById(postID)
-    .populate("refUser")
-    .exec();
+  const post = await PostModel.findById(postID).populate("refUser").exec();
 
   switch (post.state) {
     case "great":
@@ -63,12 +59,20 @@ async function getPost(postID) {
       break;
   }
 
-
   return post;
+}
+
+async function setPictures(postID, pictures) {
+  const post = await PostModel.findById(postID);
+
+  post.pictures = pictures;
+
+  await post.save();
 }
 
 module.exports = {
   createPost,
   getPosts,
   getPost,
+  setPictures,
 };
