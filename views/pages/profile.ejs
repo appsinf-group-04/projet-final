@@ -35,6 +35,7 @@
                         </div>
                     <% } else { %>
                         <% for (let i=0; i < posts.length; i++) { %>
+                            <a href="/post/<%= posts[i].id %>">
                             <div class="p-4 bg-white rounded-lg shadow-md">
                                 <% if (posts[i].pictures.length > 0) { %>
                                     <img src="<%= posts[i].pictures %>" class="object-cover w-64 h-64 mb-4 rounded-lg">
@@ -46,7 +47,8 @@
                                     <p><%= posts[i].price %>€</p>
                                 </div>
                             </div>
-                        <% } %>
+                            </a>
+                        <% } %>    
                     <% } %>
                 </div>
             </div>
