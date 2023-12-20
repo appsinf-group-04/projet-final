@@ -62,6 +62,14 @@ async function getPost(postID) {
   return post;
 }
 
+async function getPostForUser(userID) {
+  // Quelle est la diff entre find et findById
+  const posts = await PostModel.find({ refUser: userID }).sort({
+    createdAt: -1,
+  });
+  return posts;
+}
+
 async function setPictures(postID, pictures) {
   const post = await PostModel.findById(postID);
 
@@ -75,4 +83,5 @@ module.exports = {
   getPosts,
   getPost,
   setPictures,
+  getPostForUser,
 };

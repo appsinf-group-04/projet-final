@@ -19,15 +19,18 @@
                     <div class="glide">
                         <div class="glide__track" data-glide-el="track">
                             <ul class="glide__slides">
-                                <li class="glide__slide">
-                                    <img src="/public/images/allemand_bd.jpeg" alt="Product Image" class="w-full" style="width: 100%; height: auto;">
-                                </li>
-                                <li class="glide__slide">
-                                    <img src="/public/images/allemand_bd.jpeg" alt="Product Image" class="w-full" style="width: 100%; height: auto;"> 
-                                </li>
-                                <li class="glide__slide">
-                                    <img src="/public/images/allemand_bd.jpeg" alt="Product Image" class="w-full" style="width: 100%; height: auto;"> 
-                                </li>
+
+                                <% if (post.pictures.length <= 0)  { %>
+                                    <li class="glide__slide">
+                                        <img src="/public/images/book_placeholder.png" class="w-full" style="width: 100%; height: auto">
+                                    </li>
+                                <% } else { %>
+                                    <% for ( let i=0; i < post.pictures.length; i++) { %>
+                                        <li class="glide__slide">
+                                            <img src="<%= post.pictures[i] %>" class="w-full" style="width: 100%; height: auto;">
+                                        </li>
+                                    <% } %>
+                                <% } %>
                             </ul>
                         </div>
                         <div class="flex items-center justify-between mt-4 glide__arrows" data-glide-el="controls">
@@ -46,18 +49,24 @@
                 </div>
                 <div class="flex flex-col justify-between md:w-1/2 md:pl-6">
                     <div>
-                        <h2 class="mb-4 text-3xl font-bold text-gray-800">L'Allemand en bd 🇩🇪</h2>
-                        <p class="mb-4 text-2xl font-bold text-gray-800">Prix : 20€</p>
-                        <p class="mb-4 text-xl text-gray-700">État : Neuf</p>
+                        <h2 class="mb-4 text-3xl font-bold text-gray-800"><%= post.title %></h2>
+                        <p class="mb-4 text-2xl font-bold text-gray-800">Prix : <%= post.price %>€</p>
+                        <p class="mb-4 text-xl text-gray-700">État : <%= post.state %></p>
                         <p class="mb-4 text-xl text-gray-600">
-                            Vendeur: Olaf Müller
+                            Vendeur: <%= post.refUser.name %>
                         </p>
-                        <p class="mb-4 text-xl text-gray-600">Note vendeur : 3.7/5</p>
+                        <p class="mb-4 text-xl text-gray-600">
+                            <%= (post.refUser.ranking.length > 0)
+                            ? "Note vendeur: " + (post.refUser.ranking.reduce((sum, num) => sum + num, 0) / post.refUser.ranking.length) + "/5"
+                            : "Aucune note pour le moment" %>
+                        </p>
                         <div class="mb-8">
                             <span class="text-xl font-bold text-gray-700">Description:</span>
                             <p class="mt-2 text-lg text-gray-600">
-                                Livre d'allemand en BD, pour apprendre l'allemand en s'amusant.
-                                Il est encore neuf, je ne l'ai jamais utilisé.
+                                <%= (post.description.length > 0)
+                                ? post.description
+                                : "Aucune description pour le moment"
+                                 %>
                             </p>
                         </div>
                     </div>

@@ -13,14 +13,14 @@
 
   <button id="toggleFiltresButton" class="block px-4 py-2 m-4 mx-auto text-white bg-blue-900 rounded-md lg:hidden">Afficher les filtres</button>
   <div class="flex justify-center mt-4">
-    <h2 class="w-1/5 hidden lg:block p-4 text-4xl font-semibold text-center">Filtres</h2>
+    <h2 class="hidden w-1/5 p-4 text-4xl font-semibold text-center lg:block">Filtres</h2>
     <h2 id="annoncesDeVentes" class="block w-3/5 p-4 text-4xl font-semibold text-center">Annonces de ventes</h2>
   </div>
 
-  <main class="flex justify-center items-start mt-4 lg:mx-1/5">
+  <main class="flex items-start justify-center mt-4 lg:mx-1/5">
     
     <!-- Filtres de recherches -->
-    <section id="filtresSection" class="hidden bg-white border-solid rounded-md lg:w-1/5 lg:block shadow-md">
+    <section id="filtresSection" class="hidden bg-white border-solid rounded-md shadow-md lg:w-1/5 lg:block">
       
       <form action="#" method="get" id="filtres" class="flex flex-col items-center justify-start py-4 max-w-prose">
         <input type="search" name="Search" placeholder="Recherche" id="search-bar"
@@ -53,8 +53,8 @@
       
       <div class="flex flex-col items-center justify-center">
         <% for(var i=0; i < posts.length; i++) { %>
-          <a href="/post/<%= posts[i].postID %>" class="w-4/5 h-full mb-8">
-            <div class="flex flex-row w-full p-4 bg-white border-black rounded-md shadow-md">
+          <a href="/post/<%= posts[i].id %>" class="w-full h-full px-4">
+            <div class="flex flex-row w-4/5 p-4 mb-8 bg-white border-black rounded-md shadow-md">
               <img src="<%= posts[i].pictures.length > 0 ? posts[i].pictures[0] : 'public/images/book_placeholder.png' %>" class="object-cover w-32 h-32 md:w-40 md:h-40">
               <div class="flex flex-col w-full px-4">
                 

@@ -22,24 +22,31 @@
                         class="px-4 py-2 mt-5 font-bold text-white bg-red-500 rounded-md hover:bg-red-700">Déconnexion</a>
                 </div>
             </div>
-
             <div class="p-4">
                 <div class="flex items-center justify-between mb-4">
                     <h2 class="text-2xl font-bold">Mes annonces</h2>
                     <a href="/profile/create"
-                        class="px-4 py-2 font-bold text-white bg-blue-500 rounded-md hover:bg-blue-600">Ajouter une
-                        annonce</a>
+                        class="px-4 py-2 font-bold text-white bg-blue-500 rounded-md hover:bg-blue-600">Ajouter une annonce</a>
                 </div>
-                <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-                    <% for(var i=0; i < annonces.length; i++) { %>
-                    <div class="p-4 bg-white rounded-lg shadow-md">
-                        <img src="<%= annonces[i].img %>" alt="Product Image"
-                            class="object-cover w-64 h-64 mb-4 rounded-lg">
-                        <div>
-                            <h3 class="text-xl font-bold"><%= annonces[i].objectName %></h3>
-                            <p><%= annonces[i].price %>€</p>
+                <div class="flex flex-wrap justify-start gap-4">
+                    <% if (posts.length <= 0) { %>
+                        <div class="p-4 bg-white rounded-lg shadow-md">
+                            <p class="text-xl font-bold">Vous n'avez pas encore d'annonces</p>
                         </div>
-                    </div>
+                    <% } else { %>
+                        <% for (let i=0; i < posts.length; i++) { %>
+                            <div class="p-4 bg-white rounded-lg shadow-md">
+                                <% if (posts[i].pictures.length > 0) { %>
+                                    <img src="<%= posts[i].pictures %>" class="object-cover w-64 h-64 mb-4 rounded-lg">
+                                <% } else { %>
+                                    <img src="/public/images/book_placeholder.png" class="object-cover w-64 h-64 mb-4 rounded-lg">
+                                <% } %>
+                                <div>
+                                    <h3 class="text-xl font-bold"><%= posts[i].title %></h3>
+                                    <p><%= posts[i].price %>€</p>
+                                </div>
+                            </div>
+                        <% } %>
                     <% } %>
                 </div>
             </div>
