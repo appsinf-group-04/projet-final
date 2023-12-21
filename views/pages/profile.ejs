@@ -38,7 +38,7 @@
                             <a href="/post/<%= posts[i].id %>">
                             <div class="p-4 bg-white rounded-lg shadow-md">
                                 <% if (posts[i].pictures.length > 0) { %>
-                                    <img src="<%= posts[i].pictures %>" class="object-cover w-64 h-64 mb-4 rounded-lg">
+                                    <img src="<%= posts[i].pictures[0] %>" class="object-cover w-64 h-64 mb-4 rounded-lg">
                                 <% } else { %>
                                     <img src="/public/images/book_placeholder.png" class="object-cover w-64 h-64 mb-4 rounded-lg">
                                 <% } %>

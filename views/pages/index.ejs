@@ -26,13 +26,6 @@
         <input type="search" name="Search" placeholder="Recherche" id="search-bar"
         class="block py-2 pl-3 mb-4 leading-normal text-gray-900 border-0 rounded-md h-fit ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset">
 
-        <label for="courses">Code du cours:</label>
-        <select name="codeCours" id="codeCours" form="filtres" class="block py-2 pl-3 mt-1 mb-4 text-center rounded-md ring-1 ring-gray-300">
-          <% for(var i=0; i < listOfCourses.length; i++) { %>
-            <option value="<%= listOfCourses[i] %>"><%= listOfCourses[i] %></option>          
-          <% } %>
-        </select>
-
         <label for="price">Prix maximum:</label>
         <!-- l'attribut step permet les nombres à virgule -->
 
