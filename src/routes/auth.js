@@ -181,7 +181,6 @@ router.post("/register", async (req, res) => {
   res.redirect("/");
 });
 
-
 router.get("/logout", (req, res) => {
   req.session.destroy();
   res.redirect("/auth/login");
@@ -195,6 +194,5 @@ router.get("/unban/:email", authMiddleware.adminAuth, async (req, res) => {
 
   res.redirect("/dash#search-bar");
 });
-
 
 module.exports = router;

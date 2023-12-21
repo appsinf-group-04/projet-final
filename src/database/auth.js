@@ -106,7 +106,6 @@ async function logLogin(email) {
   }
 }
 
-
 module.exports = {
   createUser,
   getUserByEmail,

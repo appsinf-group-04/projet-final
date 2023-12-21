@@ -83,7 +83,7 @@ async function deletePost(postID) {
   try {
     await PostModel.findByIdAndDelete(postID);
   } catch (error) {
-    console.log('error deleting post');
+    console.log("error deleting post");
   }
 }
 

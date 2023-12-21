@@ -4,10 +4,13 @@ const { z } = require("zod");
 
 // middlewares and functions import
 const authMiddleware = require("../middlewares/auth");
-const { createPost, setPictures, getPost, deletePost } = require("../database/post");
+const {
+  createPost,
+  setPictures,
+  getPost,
+  deletePost,
+} = require("../database/post");
 const { banUser } = require("../database/auth");
-
-
 
 router.get("/profile/create", authMiddleware.userAuth, (req, res) => {
   const errors = req.session.errors;
@@ -19,7 +22,6 @@ router.get("/profile/create", authMiddleware.userAuth, (req, res) => {
   req.session.formData = null;
 });
 
-
 const states = z.enum(["great", "good", "ok", "used"]);
 const createSchema = z.object({
   title: z.string().min(5).max(40),
@@ -28,7 +30,6 @@ const createSchema = z.object({
   state: states,
   image: z.array(z.string()).optional(),
 });
-
 
 router.post("/profile/create", authMiddleware.userAuth, async (req, res) => {
   const body = req.body;
@@ -82,16 +83,15 @@ router.get("/post/:id", async (req, res) => {
 // Handles the ban of a user with an admin account
 router.post("/banUser/:email", authMiddleware.adminAuth, async (req, res) => {
   const { reasonForBan } = req.body;
-  const userEmail = req.params.email
+  const userEmail = req.params.email;
   await banUser(userEmail, reasonForBan);
-  res.redirect('/');
+  res.redirect("/");
 });
-
 
 router.post("/deletePost/:id", authMiddleware.adminAuth, async (req, res) => {
   const postID = req.params.id;
   await deletePost(postID);
-  res.redirect('/');
+  res.redirect("/");
 });
 
 module.exports = router;
