@@ -71,7 +71,7 @@ router.post("/profile/create", authMiddleware.userAuth, async (req, res) => {
   return res.redirect("/");
 });
 
-// Route
+// Detailed post page route
 router.get("/post/:id", async (req, res) => {
   const id = req.params.id;
   const post = await getPost(id);
