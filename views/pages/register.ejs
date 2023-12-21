@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
   <head>
-    <title>Your Register Page</title>
+    <title>Inscription</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="/public/css/output.css" rel="stylesheet">
@@ -21,7 +21,7 @@
         </div>
 
         <div class="mb-4">
-          <label for="name" class="block text-sm font-medium text-gray-700">Name</label> 
+          <label for="name" class="block text-sm font-medium text-gray-700">Nom</label> 
           <input type="text" name="name" id="name" class="w-full p-2 mt-1 border rounded-md" value="<%= formData ? formData['name'] : '' %>">
           <% if (errors && errors.some(e => e.path=="name")) { %>
             <p class="text-red-500"><%= errors.find(e => e.path=="name").message %></p>
@@ -29,7 +29,7 @@
         </div>
 
         <div class="mb-4">
-          <label for="password" class="block text-sm font-medium text-gray-700">Password</label> 
+          <label for="password" class="block text-sm font-medium text-gray-700">Mot de passe</label> 
           <input type="password" name="password" id="password" class="w-full p-2 mt-1 border rounded-md">
           <% if (errors && errors.some(e => e.path=="password")) { %>
             <p class="text-red-500"><%= errors.find(e => e.path=="password").message %></p>
@@ -37,16 +37,16 @@
         </div>
 
         <div class="mb-4">
-          <label for="phone" class="block text-sm font-medium text-gray-700">Phone</label> 
+          <label for="phone" class="block text-sm font-medium text-gray-700">Télephone</label> 
           <input type="tel" name="phone" id="phone" class="w-full p-2 mt-1 border rounded-md" value="<%= formData ? formData['phone'] : '' %>">
           <% if (errors && errors.some(e => e.path=="phone")) { %>
             <p class="text-red-500"><%= errors.find(e => e.path=="phone").message %></p>
           <% } %>
         </div>
 
-        <button type="submit" class="w-full px-4 py-2 text-white bg-blue-500 rounded-md hover:bg-blue-600">Register</button>
+        <button type="submit" class="w-full px-4 py-2 text-white bg-blue-500 rounded-md hover:bg-blue-600">Inscription</button>
 
-        <p class="mt-6 text-base text-center text-gray-800">Already have an account? <a href="/auth/login" class="text-blue-500 hover:underline">Log in here</a></p>
+        <p class="mt-6 text-base text-center text-gray-800">Déjà un compte? <a href="/auth/login" class="text-blue-500 hover:underline">Connecte toi ici</a></p>
       </form>
     </div>
   </body>
