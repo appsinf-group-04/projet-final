@@ -78,7 +78,7 @@
                           <button class="w-full px-6 py-3 mb-4 mr-0 text-lg font-bold text-white bg-red-500 rounded-md md:w-1/2 hover:bg-red-700 md:mr-2 md:mb-0">
                               Ban ad
                           </button>
-                          <button class="w-full px-6 py-3 ml-0 text-lg font-bold text-white bg-red-500 rounded-md md:w-1/2 hover:bg-red-700 md:ml-2">
+                          <button class="showBanModal w-full px-6 py-3 ml-0 text-lg font-bold text-white bg-red-500 rounded-md md:w-1/2 hover:bg-red-700 md:ml-2">
                               Ban user
                           </button>
                         </div>
@@ -88,7 +88,11 @@
             </div>
         </div>
     </div>
+
+    <%- include("../components/banModal.ejs") %>
+
     <script src="https://cdn.jsdelivr.net/npm/@glidejs/glide"></script>
+    <script src="../../public/js/details.js"></script>
     <script>
         new Glide('.glide').mount()
     </script>

@@ -4,6 +4,7 @@ const { z } = require("zod");
 const authMiddleware = require("../middlewares/auth");
 
 const { createPost, setPictures, getPost } = require("../database/post");
+const { banUser } = require("../database/auth");
 
 router.get("/profile/create", authMiddleware.userAuth, (req, res) => {
   const errors = req.session.errors;
@@ -70,6 +71,14 @@ router.get("/post/:id", async (req, res) => {
   const post = await getPost(id);
 
   return res.render("pages/details", { post, user: req.session.user });
+});
+
+// Route qui requiert un compte administrateur connecté afin de banir un utilisateur
+router.post("/banUser/:email", authMiddleware.adminAuth, async (req, res) => {
+  const { reasonForBan } = req.body;
+  const userEmail = req.params.email
+  await banUser(userEmail, reasonForBan);
+  res.redirect('/');
 });
 
 module.exports = router;
