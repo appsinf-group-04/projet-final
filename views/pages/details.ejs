@@ -74,7 +74,7 @@
                         <button class="w-full px-6 py-3 text-lg font-bold text-white bg-blue-500 rounded-md hover:bg-blue-600">Je suis intéressé(e)</button>
 
                         <% if (user && user.role === "admin") { %>
-                        <form action="/deletePost/<%= post._id %>" method="post" class="flex flex-col mt-4 md:flex-row">
+                        <form action="/deletePost/<%= post._id %>" method="post" onsubmit="return confirm('Supprimer définitivement cette annonce?')" class="flex flex-col mt-4 md:flex-row">
                           <input type="submit" value="Supprimer" class="w-full px-6 py-3 mb-4 mr-0 text-lg font-bold text-white bg-red-500 rounded-md md:w-1/2 hover:bg-red-700 md:mr-2 md:mb-0"></input>
                           <button type="button" class="showBanModal w-full px-6 py-3 ml-0 text-lg font-bold text-white bg-red-500 rounded-md md:w-1/2 hover:bg-red-700 md:ml-2">
                               Bannir
