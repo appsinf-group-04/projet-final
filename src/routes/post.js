@@ -4,7 +4,7 @@ const { z } = require("zod");
 
 // middlewares and functions import
 const authMiddleware = require("../middlewares/auth");
-const { createPost, setPictures, getPost } = require("../database/post");
+const { createPost, setPictures, getPost, deletePost } = require("../database/post");
 const { banUser } = require("../database/auth");
 
 
@@ -84,6 +84,13 @@ router.post("/banUser/:email", authMiddleware.adminAuth, async (req, res) => {
   const { reasonForBan } = req.body;
   const userEmail = req.params.email
   await banUser(userEmail, reasonForBan);
+  res.redirect('/');
+});
+
+
+router.post("/deletePost/:id", authMiddleware.adminAuth, async (req, res) => {
+  const postID = req.params.id;
+  await deletePost(postID);
   res.redirect('/');
 });
 
