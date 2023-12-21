@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
   <head>
     <title></title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="/public/css/output.css" rel="stylesheet">
+    <title>Inforamtions site</title>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   </head>
@@ -12,17 +13,17 @@
 
     <%- include("../components/header.ejs") %>
 
-    <div class="px-14 py-10">
-      <h1 class="text-3xl font-semibold mb-2">Website informations</h1>
+    <div class="py-10 px-14">
+      <h1 class="mb-2 text-3xl font-semibold">Inforamtions du site</h1>
 
-      <div class="flex md:flex-row flex-col">
-        <div class="md:w-1/2 w-full"><canvas id="accounts"></canvas></div>
-        <div class="md:w-1/2 w-full"><canvas id="bans"></canvas></div>
+      <div class="flex flex-col md:flex-row">
+        <div class="w-full md:w-1/2"><canvas id="accounts"></canvas></div>
+        <div class="w-full md:w-1/2"><canvas id="bans"></canvas></div>
       </div>
 
-      <div class="flex md:flex-row flex-col">
-        <div class="md:w-1/2 w-full"><canvas id="logins"></canvas></div>
-        <div class="md:w-1/2 w-full"><canvas id="posts"></canvas></div>
+      <div class="flex flex-col md:flex-row">
+        <div class="w-full md:w-1/2"><canvas id="logins"></canvas></div>
+        <div class="w-full md:w-1/2"><canvas id="posts"></canvas></div>
       </div>
 
       <div class="flex items-center justify-between pt-16">
@@ -40,8 +41,8 @@
             <tr>
               <th scope="col" class="px-6 py-3 text-xs font-medium text-left text-gray-500 uppercase">Nom</th>
               <th scope="col" class="px-6 py-3 text-xs font-medium text-left text-gray-500 uppercase">Email</th>
-              <th scope="col" class="px-6 py-3 text-xs font-medium text-left text-gray-500 uppercase">Ban reason</th>
-              <th scope="col" class="px-6 py-3 text-xs font-medium text-left text-gray-500 uppercase">Ban day</th>
+              <th scope="col" class="px-6 py-3 text-xs font-medium text-left text-gray-500 uppercase">Raison du ban</th>
+              <th scope="col" class="px-6 py-3 text-xs font-medium text-left text-gray-500 uppercase">Jour du ban</th>
               <th scope="col" class="px-6 py-3 text-xs font-medium text-left text-gray-500 uppercase"></th>
             </tr>
           </thead>
@@ -53,7 +54,7 @@
                 <td class="px-6 py-4 text-sm font-medium text-gray-800"><%= bans[i].ban.reason %></td>
                 <td class="px-6 py-4 text-sm font-medium text-gray-800"><%= bans[i].ban.at %></td>
                 <td class="px-6 py-4 text-sm font-medium text-gray-800">
-                  <a class="bg-blue-900 rounded-lg px-4 py-2 text-white cursor-pointer hover:bg-blue-950" href="/auth/unban/<%= bans[i].email %>">Unban</a>
+                  <a class="px-4 py-2 text-white bg-blue-900 rounded-lg cursor-pointer hover:bg-blue-950" href="/auth/unban/<%= bans[i].email %>">Débannir</a>
                 </td>
               </tr>
             <% } %>

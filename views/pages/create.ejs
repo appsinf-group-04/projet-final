@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,7 +15,7 @@
             <h1 class="mb-4 text-xl font-bold">Créer une Annonce</h1>
             <form action="/profile/create" method="POST" id="form">
                 <div class="flex mb-4">
-                    <label for="imgFilee" class="mr-2">Déposer les images (5) :</label>
+                    <label for="imgFilee" class="mr-2">Déposer les images (3) :</label>
                     <div class="relative">
                         <label for="imgFile" class="px-2 py-1 text-white bg-blue-500 rounded-md cursor-pointer">
                             Choisir un fichier
@@ -23,7 +23,7 @@
                         <input type="file" id="imgFile" name="images" class="hidden" accept="image/*" multiple>
                         <input type="hidden" id="base64" name="base64">
                         <% if (errors) { %>
-                          <p class="text-red-500">Select your images back</p>
+                          <p class="text-red-500">Dépose à nouveau tes images</p>
                         <% } %>
                     </div>
                 </div>
