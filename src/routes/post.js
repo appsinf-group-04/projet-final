@@ -11,8 +11,7 @@ const {
   deletePost,
   getPostById,
 } = require("../database/post");
-const { banUser } = require("../database/auth");
-const { isUserAuthorized } = require("../utils/utils");
+const { isUserPostOwner } = require("../utils/utils");
 
 router.get("/create", authMiddleware.userAuth, (req, res) => {
   const errors = req.session.errors;
@@ -82,33 +81,24 @@ router.get("/:id", async (req, res) => {
   return res.render("pages/details", { post, user: req.session.user });
 });
 
-router.post("/delete/:id", authMiddleware.adminAuth, async (req, res) => {
-  const postID = req.params.id;
-  await deletePost(postID);
-  const post = await getPostById(postID);
-  console.log(isUserAuthorized(req.session.user, post))
-  res.redirect("/");
-});
-
 router.post("/delete/:id", authMiddleware.userAuth, async (req, res) => {
   const postID = req.params.id;
 
-  try {
-    const post = await getPostById(postID);
+  const post = await getPostById(postID);
 
-    // Vérifie si l'utilisateur est autorisé à supprimer ce post
-    if (!isUserAuthorized(req.session.user, post)) {
-      console.log(isUserAuthorized(req.session.user, post));
-      return res.redirect("/");
-    }
-
-    // Supprime le post si l'utilisateur est autorisé
-    await deletePost(postID);
-    res.redirect("/");
-  } catch (error) {
-    console.error("Error deleting post:", error);
-    res.status(500).send("Internal Server Error");
+  if (!post) {
+    console.log("post not found");
+    return res.redirect("/");
   }
+
+  // post owner / admin
+  if (!isUserPostOwner(req.session.user, post)) {
+    console.log("not the owner");
+    return res.redirect("/");
+  }
+
+  await deletePost(postID);
+  res.redirect("/");
 });
 
 module.exports = router;

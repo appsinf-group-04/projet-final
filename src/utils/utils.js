@@ -84,17 +84,12 @@ function getNextDay(currentDate) {
  *
  * @returns {Boolean} - True if authorized, false otherwise
  */
-function isUserAuthorized(user, post) {
-  console.log("User:", user); 
-  console.log("Post:", post);
-
-  // Vérifie si l'utilisateur est administrateur
+function isUserPostOwner(user, post) {
   if (user.role === "admin") {
     return true;
   }
 
-  // Vérifie si l'utilisateur est le propriétaire du post
-  return user.id === post.refUser.id;
+  return user.id === post.refUser.toString();
 }
 
 
@@ -104,5 +99,5 @@ module.exports = {
   getTodayFormatted,
   formatDate,
   getNextDay,
-  isUserAuthorized,
+  isUserPostOwner,
 };

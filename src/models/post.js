@@ -29,14 +29,6 @@ const postSchema = new Schema({
     type: [String],
     default: [],
   },
-  ban: {
-    reason: String,
-    at: Date,
-    banned: {
-      type: Boolean,
-      default: false,
-    },
-  },
   sold: {
     type: Boolean,
     default: false,

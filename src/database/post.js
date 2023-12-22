@@ -81,24 +81,10 @@ async function deletePost(postID) {
   await PostModel.findByIdAndDelete(postID);
 }
 
-async function banPost(postID, reason) {
-  const post = await PostModel.findById(postID);
-
-  post.ban = {
-    banned: true,
-    reason: reason,
-    at: new Date(),
-  };
-}
-
 async function getPostById(postId) {
-  try {
-    const post = await PostModel.findById(postId);
-    return post;
-  } catch (error) {
-    console.error("Error fetching post by ID:", error);
-    throw error;
-  }
+  const post = await PostModel.findById(postId);
+
+  return post;
 }
 
 module.exports = {
@@ -109,5 +95,4 @@ module.exports = {
   getPostForUser,
   deletePost,
   getPostById,
-  banPost,
 };
