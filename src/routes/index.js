@@ -84,6 +84,10 @@ router.get("/dash", authMiddleware.adminAuth, async (req, res) => {
   });
 });
 
+router.use((req, res) => {
+  res.status(404).render("pages/404", { user: req.session.user });
+});
+
 // example of middleware usage, this route is protected and cannot be accessed without being logged in
 router.get("/xxx", authMiddleware.userAuth);
 router.get("/xxx", authMiddleware.adminAuth);
