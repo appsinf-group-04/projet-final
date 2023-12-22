@@ -39,7 +39,7 @@ async function getPosts(limit) {
   });
 
   posts.filter((p) => {
-    return p.ban.banned === false;
+    return p.ban && p.ban.banned === false;
   });
 
   return posts;

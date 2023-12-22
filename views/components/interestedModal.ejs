@@ -21,7 +21,7 @@
         <li><span class="font-semibold">numéro:</span> <%= post.refUser.phone %></li>
     </ul>
 
-    <form class="flex flex-col justify-center mb-4" method="post" action="/giveRank/<%= post.id %>" 
+    <form class="flex flex-col justify-center mb-4" method="post" action="/posts/addrank/<%= post.id %>" 
       onsubmit="return confirm('Attention, chaque note est enregistré, vous avez le droit à une note par annonce, si un abus est détecté, vous serez banni de la plateforme')">
       <label for="givenRank">attribuer une note?</label>
       <input type="number" name="givenRank" min="0" max="5" required

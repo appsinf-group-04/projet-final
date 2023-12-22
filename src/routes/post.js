@@ -11,6 +11,7 @@ const {
   deletePost,
   getPostById,
 } = require("../database/post");
+const { hasAlreadyGivenRank, addRank } = require("../database/ranks");
 const { isUserPostOwner } = require("../utils/utils");
 
 router.get("/create", authMiddleware.userAuth, (req, res) => {
@@ -103,7 +104,7 @@ router.post("/delete/:id", authMiddleware.userAuth, async (req, res) => {
   res.redirect("/");
 });
 
-router.post("/giveRank/:id", authMiddleware.userAuth, async (req, res) => {
+router.post("/addrank/:id", authMiddleware.userAuth, async (req, res) => {
   const postID = req.params.id;
   const { givenRank } = req.body;
   const userID = req.session.user.id;

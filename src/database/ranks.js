@@ -58,8 +58,10 @@ async function hasAlreadyGivenRank(userID, postID) {
     return true;
   }
 
-  if (post.interested.contains(userID)) {
-    return true;
+  for (i = 0; i < post.interested.length; i++) {
+    if (userID === post.interested[i].toString()) {
+      return true;
+    }
   }
 
   return false;
