@@ -8,7 +8,7 @@ function createPostsByDayGraph(selector, data) {
       data: {
         datasets: [
           {
-            label: 'Posts created by day',
+            label: 'Annonces créées par jour',
             data: data.map((i) => ({ x: i.date, y: i.count })),
           }
         ]
@@ -26,7 +26,7 @@ function createAccountsByDayGraph(selector, data) {
       data: {
         datasets: [
           {
-            label: 'Accounts created',
+            label: 'Comptes créés',
             data: data.map((i) => ({ x: i.date, y: i.count })),
           }
         ]
@@ -45,7 +45,7 @@ function createLoginsByDayGraph(selector, data) {
       data: {
         datasets: [
           {
-            label: 'Accounts logged in by day',
+            label: 'Comptes connecté par jour',
             data: data.map((i) => ({ x: i.day, y: i.count })),
           }
         ]
@@ -77,15 +77,15 @@ function createOverTimeGraph(selector, data1, data2) {
       data: {
         datasets: [
           {
-            label: 'Bans Over Time',
+            label: 'Bannissement dans le temps',
             data: data1.map(i => ({ x: i.date, y: i.bans })),
           },
           {
-            label: 'Accounts Registered Over Time',
+            label: 'Comptes enregistrés dans le temps',
             data: data2.map((i) => ({ x: i.date, y: i.count })),
           },
           {
-            label: 'Active Accounts Over Time',
+            label: 'Comptes actifs dans le temps',
             data: data3.map((i) => ({ x: i.date, y: i.count })),
           }
         ]

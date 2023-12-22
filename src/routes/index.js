@@ -50,7 +50,6 @@ router.get("/dash", authMiddleware.adminAuth, async (req, res) => {
   } else {
     bans = await getLatestBannedUsers(10);
   }
-
   bans = bans.map((user) => {
     return {
       name: user.name,
@@ -78,8 +77,8 @@ router.get("/dash", authMiddleware.adminAuth, async (req, res) => {
   });
 });
 
+
 router.get("/*", (req, res) => {
   res.render("pages/404", { user: req.session.user });
-});
 
 module.exports = router;

@@ -51,6 +51,7 @@ router.post("/create", authMiddleware.userAuth, async (req, res) => {
     req.session.errors = errors;
     req.session.formData = body;
 
+
     return res.redirect("/posts/create");
   }
 
@@ -74,6 +75,7 @@ router.post("/create", authMiddleware.userAuth, async (req, res) => {
 });
 
 // Detailed post page route
+
 router.get("/:id", async (req, res) => {
   const id = req.params.id;
   const post = await getPost(id);
@@ -98,6 +100,22 @@ router.post("/delete/:id", authMiddleware.userAuth, async (req, res) => {
   }
 
   await deletePost(postID);
+  res.redirect("/");
+});
+
+router.post("/giveRank/:id", authMiddleware.userAuth, async (req, res) => {
+  const postID = req.params.id;
+  const { givenRank } = req.body;
+  const userID = req.session.user.id;
+  const cannotGiveRank = await hasAlreadyGivenRank(userID, postID);
+
+  if (!cannotGiveRank) {
+    addRank(postID, givenRank, userID);
+    console.log("rank added");
+  } else {
+    console.log("Already ranked that ad");
+  }
+
   res.redirect("/");
 });
 

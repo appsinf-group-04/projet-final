@@ -9,6 +9,8 @@
 </head>
 
 <%- include("../components/header.ejs") %>
+<%- include("../components/banModal.ejs") %>
+<%- include("../components/interestedModal.ejs") %>
 
 <body class="min-h-screen bg-gray-100">
     <div class="max-w-screen-lg p-6 pb-10 mx-auto mt-20 sm:px-6 lg:px-8">
@@ -56,7 +58,7 @@
                         </p>
                         <p class="mb-4 text-xl text-gray-600">
                             <%= (post.refUser.ranking.length > 0)
-                            ? "Note vendeur: " + (post.refUser.ranking.reduce((sum, num) => sum + num, 0) / post.refUser.ranking.length) + "/5"
+                            ? "Note vendeur: " + ((post.refUser.ranking.reduce((sum, num) => sum + num, 0) / post.refUser.ranking.length)).toFixed(2) + "/5"
                             : "Aucune note pour le moment" %>
                         </p>
                         <div class="mb-8">
@@ -70,7 +72,11 @@
                         </div>
                     </div>
                     <div>
-                        <button class="w-full px-6 py-3 text-lg font-bold text-white bg-blue-500 rounded-md hover:bg-blue-600">Je suis intéressé(e)</button>
+                        <% if(user) { %>
+                          <button class="showInterestedModal w-full px-6 py-3 text-lg font-bold text-white bg-blue-500 rounded-md hover:bg-blue-600">Je suis intéressé(e)</button>
+                        <% } else { %>
+                          <button onclick="document.location.href='/auth/login'" class="w-full px-6 py-3 text-lg font-bold text-white bg-blue-500 rounded-md hover:bg-blue-600">Je suis intéressé</button>
+                        <% } %>
 
                         <% if (user) { %>
                             <% if (user.role === "admin") { %>
@@ -91,8 +97,6 @@
             </div>
         </div>
     </div>
-
-    <%- include("../components/banModal.ejs") %>
 
     <script src="https://cdn.jsdelivr.net/npm/@glidejs/glide"></script>
     <script src="../../public/js/details.js"></script>

@@ -59,7 +59,7 @@
                 <span>Vendeur: <%= posts[i].refUser.name %></span>
                 <span><%= posts[i].seller %> <%= 
                     (posts[i].refUser.ranking.length > 0)
-                    ? "Note: " + (posts[i].refUser.ranking.reduce((sum, num) => sum + num, 0) / posts[i].refUser.ranking.length) + "/5"
+                    ? "Note: " + ((posts[i].refUser.ranking.reduce((sum, num) => sum + num, 0) / posts[i].refUser.ranking.length)).toFixed(2) + "/5"
                     : "Aucune note"
                 %></span>
                 <span>État: <%= posts[i].state %></span>

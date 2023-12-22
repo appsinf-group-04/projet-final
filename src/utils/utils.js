@@ -92,7 +92,6 @@ function isUserPostOwner(user, post) {
   return user.id === post.refUser.toString();
 }
 
-
 module.exports = {
   isAuthorizedEmail,
   isPhoneNumber,

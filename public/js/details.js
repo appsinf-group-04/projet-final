@@ -12,3 +12,18 @@ for (let modal of showBanModal) {
     banModal.close();
   });
 }
+
+// interested Modal
+const showInterestedModal = document.getElementsByClassName('showInterestedModal');
+const closeInterestedModal = document.getElementById('closeInterestedModal');
+const interestedModal = document.getElementById('interestedModal');
+
+for (let modal of showInterestedModal) {
+  modal.addEventListener('click', () => {
+    interestedModal.showModal();
+  });
+
+  closeInterestedModal.addEventListener('click', () => {
+    interestedModal.close();
+  });
+}
