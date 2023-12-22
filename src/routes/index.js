@@ -85,4 +85,8 @@ router.get("/dash", authMiddleware.adminAuth, async (req, res) => {
   });
 });
 
+router.use((req, res) => {
+  res.status(404).render("pages/404", { user: req.session.user });
+});
+
 module.exports = router;

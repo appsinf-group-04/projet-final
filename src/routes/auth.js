@@ -56,7 +56,7 @@ router.post("/login", async (req, res) => {
   if (!userExists) {
     req.session.errors = [
       {
-        message: "User with this email does not exist",
+        message: "Utilisateur avec cet email n'existe pas",
         path: "email",
       },
     ];
@@ -69,7 +69,7 @@ router.post("/login", async (req, res) => {
     req.session.errors = [
       {
         message:
-          "This account has been banned. Contact an admin for more informations.",
+          "Ce compte a été banni. Contactez un admin pour plus d'informations.",
         path: "email",
       },
     ];
@@ -84,7 +84,7 @@ router.post("/login", async (req, res) => {
   if (!passwordCorrect) {
     req.session.errors = [
       {
-        message: "Incorrect password",
+        message: "Mot de passe incorrect",
         path: "password",
       },
     ];
@@ -121,10 +121,12 @@ const registerSchema = z.object({
   email: z
     .string()
     .email()
-    .refine(isAuthorizedEmail, "Only UCLouvain emails are allowed"),
-  password: z.string().min(8, "Password must be at least 8 characters long"),
-  phone: z.string().refine(isPhoneNumber, "Phone number must be valid"),
-  name: z.string().min(2, "Name must be at least 2 characters long"),
+    .refine(isAuthorizedEmail, "Seulement les emails UCLouvain sont autorisés"),
+  password: z
+    .string()
+    .min(8, "Le mot de passe doit faire au moins 8 caractères"),
+  phone: z.string().refine(isPhoneNumber, "Numéro de téléphone invalide"),
+  name: z.string().min(2, "Le nom doit faire au moins 2 caractères"),
   profilePicture: z.string().optional(),
 });
 
@@ -152,7 +154,7 @@ router.post("/register", async (req, res) => {
   if (userAlreadyExists) {
     req.session.errors = [
       {
-        message: "A user with this email already exists",
+        message: "Un utilisateur avec cet email existe déjà",
         path: "email",
       },
     ];
