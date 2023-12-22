@@ -47,7 +47,7 @@
       
       <div class="flex flex-col items-center justify-center">
         <% for(var i=0; i < posts.length; i++) { %>
-          <a href="/post/<%= posts[i].id %>" class="w-full h-full mb-8">
+          <a href="/posts/<%= posts[i].id %>" class="w-full h-full mb-8">
             <div class="flex flex-row w-full p-4 bg-white border-black rounded-md shadow-md">
               <img src="<%= posts[i].pictures.length > 0 ? posts[i].pictures[0] : 'public/images/book_placeholder.png' %>" class="object-cover w-32 h-32 md:w-40 md:h-40">
               <div class="flex flex-col w-full px-4">

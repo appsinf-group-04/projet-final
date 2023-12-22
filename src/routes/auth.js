@@ -10,6 +10,7 @@ const {
   testPassword,
   unbanUser,
   logLogin,
+  banUser
 } = require("../database/auth");
 const { isPhoneNumber, isAuthorizedEmail } = require("../utils/utils");
 const { logNewLogin } = require("../database/logins");
@@ -195,6 +196,16 @@ router.get("/unban/:email", authMiddleware.adminAuth, async (req, res) => {
   await unbanUser(email);
 
   res.redirect("/dash#search-bar");
+});
+
+// Handles the ban of a user with an admin account
+router.post("/ban/:email", authMiddleware.adminAuth, async (req, res) => {
+  const { reasonForBan } = req.body;
+  const userEmail = req.params.email;
+
+  await banUser(userEmail, reasonForBan);
+
+  res.redirect("/");
 });
 
 module.exports = router;
