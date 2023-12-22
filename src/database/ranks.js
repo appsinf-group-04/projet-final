@@ -58,15 +58,10 @@ async function hasAlreadyGivenRank(userID, postID) {
     return true;
   }
 
-  try {
-    for (i = 0; i < post.interested.length; i++) {
-      if (userID === post.interested[i].toString()) {
-        return true;
-      }
-    }
-  } catch (error) {
-    console.log("error occured while checking ranks");
+  if (post.interested.contains(userID)) {
+    return true;
   }
+
   return false;
 }
 
