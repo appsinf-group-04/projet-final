@@ -72,7 +72,7 @@
                         </div>
                     </div>
                     <div>
-                        <button onclick="console.log('aaaa')" class="showInterestedModal w-full px-6 py-3 text-lg font-bold text-white bg-blue-500 rounded-md hover:bg-blue-600">Je suis intéressé(e)</button>
+                        <button class="showInterestedModal w-full px-6 py-3 text-lg font-bold text-white bg-blue-500 rounded-md hover:bg-blue-600">Je suis intéressé(e)</button>
 
                         <% if (user && user.role === "admin") { %>
                         <form action="/deletePost/<%= post._id %>" method="post" onsubmit="return confirm('Supprimer définitivement cette annonce?')" class="flex flex-col mt-4 md:flex-row">

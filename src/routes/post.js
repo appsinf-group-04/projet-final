@@ -10,6 +10,7 @@ const {
   getPost,
   deletePost,
 } = require("../database/post");
+
 const { banUser, getUserByEmail } = require("../database/auth");
 const { addRank, hasAlreadyGivenRank } = require("../database/ranks");
 
