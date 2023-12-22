@@ -77,10 +77,26 @@ function getNextDay(currentDate) {
   return nextDayDateTime;
 }
 
+/**
+ * Check if the user is authorized to perform an action on a post
+ * @param {Object} user - The user object
+ * @param {Object} post - The post object
+ *
+ * @returns {Boolean} - True if authorized, false otherwise
+ */
+function isUserPostOwner(user, post) {
+  if (user.role === "admin") {
+    return true;
+  }
+
+  return user.id === post.refUser.toString();
+}
+
 module.exports = {
   isAuthorizedEmail,
   isPhoneNumber,
   getTodayFormatted,
   formatDate,
   getNextDay,
+  isUserPostOwner,
 };

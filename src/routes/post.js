@@ -9,12 +9,12 @@ const {
   setPictures,
   getPost,
   deletePost,
+  getPostById,
 } = require("../database/post");
+const { hasAlreadyGivenRank, addRank } = require("../database/ranks");
+const { isUserPostOwner } = require("../utils/utils");
 
-const { banUser, getUserByEmail } = require("../database/auth");
-const { addRank, hasAlreadyGivenRank } = require("../database/ranks");
-
-router.get("/profile/create", authMiddleware.userAuth, (req, res) => {
+router.get("/create", authMiddleware.userAuth, (req, res) => {
   const errors = req.session.errors;
   const formData = req.session.formData;
   const user = req.session.user;
@@ -33,7 +33,7 @@ const createSchema = z.object({
   image: z.array(z.string()).optional(),
 });
 
-router.post("/profile/create", authMiddleware.userAuth, async (req, res) => {
+router.post("/create", authMiddleware.userAuth, async (req, res) => {
   const body = req.body;
 
   body.price = parseInt(body.price);
@@ -52,7 +52,7 @@ router.post("/profile/create", authMiddleware.userAuth, async (req, res) => {
     req.session.errors = errors;
     req.session.formData = body;
 
-    return res.redirect("/profile/create");
+    return res.redirect("/posts/create");
   }
 
   const userID = req.session.user.id;
@@ -75,28 +75,35 @@ router.post("/profile/create", authMiddleware.userAuth, async (req, res) => {
 });
 
 // Detailed post page route
-router.get("/post/:id", async (req, res) => {
+
+router.get("/:id", async (req, res) => {
   const id = req.params.id;
   const post = await getPost(id);
 
   return res.render("pages/details", { post, user: req.session.user });
 });
 
-// Handles the ban of a user with an admin account
-router.post("/banUser/:email", authMiddleware.adminAuth, async (req, res) => {
-  const { reasonForBan } = req.body;
-  const userEmail = req.params.email;
-  await banUser(userEmail, reasonForBan);
-  res.redirect("/");
-});
-
-router.post("/deletePost/:id", authMiddleware.adminAuth, async (req, res) => {
+router.post("/delete/:id", authMiddleware.userAuth, async (req, res) => {
   const postID = req.params.id;
+
+  const post = await getPostById(postID);
+
+  if (!post) {
+    console.log("post not found");
+    return res.redirect("/");
+  }
+
+  // post owner / admin
+  if (!isUserPostOwner(req.session.user, post)) {
+    console.log("not the owner");
+    return res.redirect("/");
+  }
+
   await deletePost(postID);
   res.redirect("/");
 });
 
-router.post("/giveRank/:id", authMiddleware.userAuth, async (req, res) => {
+router.post("/addrank/:id", authMiddleware.userAuth, async (req, res) => {
   const postID = req.params.id;
   const { givenRank } = req.body;
   const userID = req.session.user.id;

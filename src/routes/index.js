@@ -9,7 +9,6 @@ const {
   getBansOverTime,
   getAccountsOverTime,
   getPostsCreatedByDay,
-  getPostsOverTime,
 } = require("../database/stats");
 const { getPosts, getPostForUser } = require("../database/post");
 
@@ -18,7 +17,7 @@ const { formatDate } = require("../utils/utils");
 const { getLoginsPerDay: getLoginsByDay } = require("../database/logins");
 
 router.use("/auth", authRouter);
-router.use("/", postRouter);
+router.use("/posts", postRouter);
 
 // Index page route
 router.get("/", async (req, res) => {
@@ -33,12 +32,6 @@ router.get("/profile", authMiddleware.userAuth, async (req, res) => {
   const user = req.session.user;
   const posts = await getPostForUser(user.id);
   res.render("pages/profile", { user, posts });
-});
-
-// Post creation page
-router.get("/profile/create", (req, res) => {
-  const user = req.session.user;
-  res.render("pages/create", { user });
 });
 
 // Admin dashboard page
@@ -57,7 +50,6 @@ router.get("/dash", authMiddleware.adminAuth, async (req, res) => {
   } else {
     bans = await getLatestBannedUsers(10);
   }
-
   bans = bans.map((user) => {
     return {
       name: user.name,
@@ -85,8 +77,8 @@ router.get("/dash", authMiddleware.adminAuth, async (req, res) => {
   });
 });
 
-router.use((req, res) => {
-  res.status(404).render("pages/404", { user: req.session.user });
+router.get("/*", (req, res) => {
+  res.render("pages/404", { user: req.session.user });
 });
 
 module.exports = router;
