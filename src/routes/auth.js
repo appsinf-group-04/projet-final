@@ -2,6 +2,7 @@ const { Router } = require("express");
 const router = Router();
 const { z } = require("zod");
 
+// middlewares and functions import
 const authMiddleware = require("../middlewares/auth");
 const {
   createUser,
@@ -13,6 +14,7 @@ const {
 const { isPhoneNumber, isAuthorizedEmail } = require("../utils/utils");
 const { logNewLogin } = require("../database/logins");
 
+// Login page route
 router.get("/login", (req, res) => {
   const errors = req.session.errors;
   const formData = req.session.formData;
@@ -23,10 +25,13 @@ router.get("/login", (req, res) => {
   req.session.formData = null;
 });
 
+// Zod object for checking the provided data to log in
 const LoginSchema = z.object({
   email: z.string().email(),
   password: z.string(),
 });
+
+// Handles the login
 router.post("/login", async (req, res) => {
   const body = req.body;
 
@@ -100,6 +105,7 @@ router.post("/login", async (req, res) => {
   return res.redirect("/");
 });
 
+// Register page route
 router.get("/register", (req, res) => {
   const errors = req.session.errors;
   const formData = req.session.formData;
@@ -110,6 +116,7 @@ router.get("/register", (req, res) => {
   req.session.formData = null;
 });
 
+// Zod object for checking the provided data to create an account
 const registerSchema = z.object({
   email: z
     .string()
@@ -122,6 +129,8 @@ const registerSchema = z.object({
   name: z.string().min(2, "Le nom doit faire au moins 2 caractères"),
   profilePicture: z.string().optional(),
 });
+
+// Handle the creation of a new account
 router.post("/register", async (req, res) => {
   const body = req.body;
 
@@ -179,6 +188,7 @@ router.get("/logout", (req, res) => {
   res.redirect("/auth/login");
 });
 
+// handles the unbanning of a user
 router.get("/unban/:email", authMiddleware.adminAuth, async (req, res) => {
   const email = req.params.email;
 
