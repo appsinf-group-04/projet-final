@@ -9,8 +9,10 @@ const {
   setPictures,
   getPost,
   deletePost,
+  getPostById,
 } = require("../database/post");
 const { banUser } = require("../database/auth");
+const { isUserAuthorized } = require("../utils/utils");
 
 router.get("/profile/create", authMiddleware.userAuth, (req, res) => {
   const errors = req.session.errors;
@@ -91,7 +93,30 @@ router.post("/banUser/:email", authMiddleware.adminAuth, async (req, res) => {
 router.post("/deletePost/:id", authMiddleware.adminAuth, async (req, res) => {
   const postID = req.params.id;
   await deletePost(postID);
+  const post = await getPostById(postID);
+  console.log(isUserAuthorized(req.session.user, post))
   res.redirect("/");
+});
+
+router.post("/deletePost/:id", authMiddleware.userAuth, async (req, res) => {
+  const postID = req.params.id;
+
+  try {
+    const post = await getPostById(postID);
+
+    // Vérifie si l'utilisateur est autorisé à supprimer ce post
+    if (!isUserAuthorized(req.session.user, post)) {
+      console.log(isUserAuthorized(req.session.user, post));
+      return res.redirect("/");
+    }
+
+    // Supprime le post si l'utilisateur est autorisé
+    await deletePost(postID);
+    res.redirect("/");
+  } catch (error) {
+    console.error("Error deleting post:", error);
+    res.status(500).send("Internal Server Error");
+  }
 });
 
 module.exports = router;

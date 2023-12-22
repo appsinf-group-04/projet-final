@@ -87,6 +87,16 @@ async function deletePost(postID) {
   }
 }
 
+async function getPostById(postId) {
+  try {
+    const post = await PostModel.findById(postId);
+    return post;
+  } catch (error) {
+    console.error("Error fetching post by ID:", error);
+    throw error;
+  }
+}
+
 module.exports = {
   createPost,
   getPosts,
@@ -94,4 +104,5 @@ module.exports = {
   setPictures,
   getPostForUser,
   deletePost,
+  getPostById,
 };
