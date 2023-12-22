@@ -1,6 +1,8 @@
 const router = require("express").Router();
 const authRouter = require("./auth");
 const postRouter = require("./post");
+
+// middlewares and functions import
 const authMiddleware = require("../middlewares/auth");
 const {
   getAccountsCreatedByDay,
@@ -9,7 +11,6 @@ const {
   getPostsCreatedByDay,
   getPostsOverTime,
 } = require("../database/stats");
-
 const { getPosts, getPostForUser } = require("../database/post");
 
 const { getLatestBannedUsers, searchBannedUsers } = require("../database/auth");
@@ -19,22 +20,22 @@ const { getLoginsPerDay: getLoginsByDay } = require("../database/logins");
 router.use("/auth", authRouter);
 router.use("/", postRouter);
 
-// Index page
+// Index page route
 router.get("/", async (req, res) => {
   const user = req.session.user;
-  const listOfCourses = ["LINFO1212", "LMATH1002", "LCOPS1204"];
   const posts = await getPosts(20);
 
-  res.render("pages/index", { user, posts, listOfCourses });
+  res.render("pages/index", { user, posts });
 });
 
-// Profile page
+// Profile page route
 router.get("/profile", authMiddleware.userAuth, async (req, res) => {
   const user = req.session.user;
   const posts = await getPostForUser(user.id);
   res.render("pages/profile", { user, posts });
 });
 
+// Post creation page
 router.get("/profile/create", (req, res) => {
   const user = req.session.user;
   res.render("pages/create", { user });
@@ -87,12 +88,5 @@ router.get("/dash", authMiddleware.adminAuth, async (req, res) => {
 router.use((req, res) => {
   res.status(404).render("pages/404", { user: req.session.user });
 });
-
-// example of middleware usage, this route is protected and cannot be accessed without being logged in
-router.get("/xxx", authMiddleware.userAuth);
-router.get("/xxx", authMiddleware.adminAuth);
-
-// you can even chain them
-router.get("/xxx", authMiddleware.userAuth, authMiddleware.adminAuth);
 
 module.exports = router;

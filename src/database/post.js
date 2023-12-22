@@ -78,10 +78,20 @@ async function setPictures(postID, pictures) {
   await post.save();
 }
 
+async function deletePost(postID) {
+  console.log(postID);
+  try {
+    await PostModel.findByIdAndDelete(postID);
+  } catch (error) {
+    console.log("error deleting post");
+  }
+}
+
 module.exports = {
   createPost,
   getPosts,
   getPost,
   setPictures,
   getPostForUser,
+  deletePost,
 };

@@ -1,9 +1,16 @@
 const { Router } = require("express");
 const router = Router();
 const { z } = require("zod");
-const authMiddleware = require("../middlewares/auth");
 
-const { createPost, setPictures, getPost } = require("../database/post");
+// middlewares and functions import
+const authMiddleware = require("../middlewares/auth");
+const {
+  createPost,
+  setPictures,
+  getPost,
+  deletePost,
+} = require("../database/post");
+const { banUser } = require("../database/auth");
 
 router.get("/profile/create", authMiddleware.userAuth, (req, res) => {
   const errors = req.session.errors;
@@ -65,11 +72,26 @@ router.post("/profile/create", authMiddleware.userAuth, async (req, res) => {
   return res.redirect("/");
 });
 
+// Detailed post page route
 router.get("/post/:id", async (req, res) => {
   const id = req.params.id;
   const post = await getPost(id);
 
   return res.render("pages/details", { post, user: req.session.user });
+});
+
+// Handles the ban of a user with an admin account
+router.post("/banUser/:email", authMiddleware.adminAuth, async (req, res) => {
+  const { reasonForBan } = req.body;
+  const userEmail = req.params.email;
+  await banUser(userEmail, reasonForBan);
+  res.redirect("/");
+});
+
+router.post("/deletePost/:id", authMiddleware.adminAuth, async (req, res) => {
+  const postID = req.params.id;
+  await deletePost(postID);
+  res.redirect("/");
 });
 
 module.exports = router;
