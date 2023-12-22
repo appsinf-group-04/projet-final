@@ -38,6 +38,10 @@ async function getPosts(limit) {
     }
   });
 
+  posts.filter((p) => {
+    return p.ban.banned === false;
+  });
+
   return posts;
 }
 
