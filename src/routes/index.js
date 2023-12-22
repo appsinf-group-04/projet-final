@@ -77,7 +77,6 @@ router.get("/dash", authMiddleware.adminAuth, async (req, res) => {
   });
 });
 
-
 router.get("/*", (req, res) => {
   res.render("pages/404", { user: req.session.user });
 });

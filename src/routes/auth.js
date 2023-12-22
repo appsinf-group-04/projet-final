@@ -10,7 +10,7 @@ const {
   testPassword,
   unbanUser,
   logLogin,
-  banUser
+  banUser,
 } = require("../database/auth");
 const { isPhoneNumber, isAuthorizedEmail } = require("../utils/utils");
 const { logNewLogin } = require("../database/logins");

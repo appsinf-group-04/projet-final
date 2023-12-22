@@ -52,7 +52,7 @@ async function banUser(email, reason) {
     banned: true,
   };
 
-  await PostModel.deleteMany({ refUser: user._id })
+  await PostModel.deleteMany({ refUser: user._id });
   await user.save();
 }
 

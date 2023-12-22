@@ -52,7 +52,6 @@ router.post("/create", authMiddleware.userAuth, async (req, res) => {
     req.session.errors = errors;
     req.session.formData = body;
 
-
     return res.redirect("/posts/create");
   }
 
