@@ -21,11 +21,11 @@
   <main class="flex items-start justify-center mt-4 lg:mx-1/5">
     
     <!-- Filtres de recherches -->
-    <section id="filtresSection" class="hidden bg-white border-solid rounded-md shadow-md lg:w-1/5 lg:block">
+    <section id="filtresSection" class="hidden bg-white border-solid rounded-md shadow-md lg:w-1/5 lg:block p-6">
       
-      <form action="#" method="get" id="filtres" class="flex flex-col items-center justify-start py-4 max-w-prose">
-        <input type="search" name="Search" placeholder="Recherche" id="search-bar"
-        class="block py-2 pl-3 mb-4 leading-normal text-gray-900 border-0 rounded-md h-fit ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset">
+      <form action="/posts/search" method="post" id="filtres" class="flex flex-col items-start justify-start py-4">
+        <input required type="search" name="search" placeholder="Recherche" id="search-bar"
+        class="block py-2 px-3 mb-4 leading-normal text-gray-900 border-0 rounded-md h-fit ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset w-full">
 
         <label for="price">Prix maximum:</label>
         <!-- l'attribut step permet les nombres à virgule -->
@@ -49,7 +49,7 @@
         <% for(var i=0; i < posts.length; i++) { %>
           <a href="/posts/<%= posts[i].id %>" class="w-full h-full mb-8">
             <div class="flex flex-row w-full p-4 bg-white border-black rounded-md shadow-md">
-              <img src="<%= posts[i].pictures.length > 0 ? posts[i].pictures[0] : 'public/images/book_placeholder.png' %>" class="object-cover w-32 h-32 md:w-40 md:h-40">
+              <img src="<%= posts[i].pictures.length > 0 ? posts[i].pictures[0] : '/public/images/book_placeholder.png' %>" class="object-cover w-32 h-32 md:w-40 md:h-40">
               <div class="flex flex-col w-full px-4">
                 
                 <div class="flex flex-row justify-between pb-2">
@@ -69,6 +69,10 @@
           </a>
         <% } %>
     </div>
+
+    <% if (posts.length == 0) { %>
+      <h1 class="text-3xl font-semibold text-center">Aucun résultat</h1>
+    <% } %>
 
     </section>
   </main>

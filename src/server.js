@@ -2,8 +2,7 @@ const path = require("path");
 const express = require("express");
 const session = require("express-session");
 const mongoose = require("mongoose");
-
-const { getPosts, createPost, getPost } = require("./database/post");
+const { searchPosts } = require("./database/post");
 
 const app = express();
 
@@ -27,5 +26,10 @@ app.listen(process.env.PORT || 8080, () => {
   mongoose
     .connect("mongodb://127.0.0.1:27017/projet-final")
     .then(() => console.log("Connected to MongoDB"))
+    .then(async () => {
+      const posts = await searchPosts("foo", 12);
+
+      console.log(posts);
+    })
     .catch((err) => console.log(err));
 });
