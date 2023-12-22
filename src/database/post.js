@@ -15,7 +15,7 @@ async function createPost(title, price, state, description, userID) {
 }
 
 async function getPosts(limit) {
-  const posts = await PostModel.find({})
+  let posts = await PostModel.find({})
     .sort({ createdAt: -1 })
     .limit(limit)
     .populate("refUser")
@@ -38,8 +38,14 @@ async function getPosts(limit) {
     }
   });
 
-  posts.filter((p) => {
-    return p.ban && p.ban.banned === false;
+  posts = posts.filter((p) => {
+    if (p.ban && p.ban.banned === true) {
+      return false;
+    }
+    if (p.sold === true) {
+      return false;
+    }
+    return true;
   });
 
   return posts;
@@ -67,9 +73,20 @@ async function getPost(postID) {
 }
 
 async function getPostForUser(userID) {
-  const posts = await PostModel.find({ refUser: userID }).sort({
+  let posts = await PostModel.find({ refUser: userID }).sort({
     createdAt: -1,
   });
+
+  posts = posts.filter((p) => {
+    if (p.ban && p.ban.banned === true) {
+      return false;
+    }
+    if (p.sold === true) {
+      return false;
+    }
+    return true;
+  });
+
   return posts;
 }
 
@@ -91,6 +108,13 @@ async function getPostById(postId) {
   return post;
 }
 
+async function markPostSold(postId) {
+  const post = await PostModel.findById(postId);
+
+  post.sold = true;
+  await post.save();
+}
+
 module.exports = {
   createPost,
   getPosts,
@@ -99,4 +123,5 @@ module.exports = {
   getPostForUser,
   deletePost,
   getPostById,
+  markPostSold,
 };
