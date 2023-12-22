@@ -91,13 +91,11 @@ router.post("/delete/:id", authMiddleware.userAuth, async (req, res) => {
   const post = await getPostById(postID);
 
   if (!post) {
-    console.log("post not found");
     return res.redirect("/");
   }
 
   // post owner / admin
   if (!isUserPostOwner(req.session.user, post)) {
-    console.log("not the owner");
     return res.redirect("/");
   }
 
@@ -113,9 +111,6 @@ router.post("/addrank/:id", authMiddleware.userAuth, async (req, res) => {
 
   if (!cannotGiveRank) {
     addRank(postID, givenRank, userID);
-    console.log("rank added");
-  } else {
-    console.log("Already ranked that ad");
   }
 
   res.redirect("/");
