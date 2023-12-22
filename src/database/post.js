@@ -67,7 +67,6 @@ async function getPost(postID) {
 }
 
 async function getPostForUser(userID) {
-  // Quelle est la diff entre find et findById
   const posts = await PostModel.find({ refUser: userID }).sort({
     createdAt: -1,
   });
@@ -83,7 +82,6 @@ async function setPictures(postID, pictures) {
 }
 
 async function deletePost(postID) {
-  console.log(postID);
   try {
     await PostModel.findByIdAndDelete(postID);
   } catch (error) {
