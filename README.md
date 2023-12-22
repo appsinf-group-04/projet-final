@@ -15,10 +15,6 @@ Installation des paquets npm
 ```
 $ npm install
 ```
-Génération du certificat https, le secret: "secret" (original oui)
-  ```
-  $ npm run cert
-  ```
 Build du fichier tailwindcss
 ```
 $ npm run tailwind 
