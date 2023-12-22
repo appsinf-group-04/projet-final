@@ -1,12 +1,22 @@
 const mongoose = require("mongoose");
 
 const UserModel = require("../src/models/user");
+const PostModel = require("../src/models/post");
 const { createUser } = require("../src/database/auth");
+const { createPost,
+  getPosts,
+  getPost,
+  getPostForUser,
+  deletePost,
+  getPostById,
+  markPostSold 
+} = require("../src/database/post");
 const { addRank, getAverageRanking, resetRanking } = require("../src/database/ranks");
 
 describe("Ranking", () => {
 
   let user;
+  let post;
 
   beforeAll(async () => {
     await mongoose.connect("mongodb://127.0.0.1:27017/projet-final")
@@ -18,6 +28,13 @@ describe("Ranking", () => {
       "passwordsecure",
       "0470626544",
       "Jocke",
+    );
+    post = await createPost(
+      "title", 
+      12, 
+      "good", 
+      "small description", 
+      user._id
     );
   });
 
@@ -32,13 +49,13 @@ describe("Ranking", () => {
   });
 
   test("Should add a ranking", async () => {
-    await addRank(user.email, 4);
+    await addRank(post.id, 4, "657f1ad88b24e96d12fa4494");
     const avg = await getAverageRanking(user.email);
     expect(avg).toBe(4);
   });
 
   test("Should add a ranking and eval correct avg", async () => {
-    await addRank(user.email, 2);
+    await addRank(post.id, 2, "657f1ad88b24e96d12fa4495");
     const avg = await getAverageRanking(user.email);
     expect(avg).toBe(3);
   });
