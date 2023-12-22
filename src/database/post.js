@@ -39,7 +39,7 @@ async function getPosts(limit) {
   });
 
   posts.filter((p) => {
-    return p.ban.banned === false;
+    return p.ban && p.ban.banned === false;
   });
 
   return posts;
@@ -82,11 +82,13 @@ async function setPictures(postID, pictures) {
 }
 
 async function deletePost(postID) {
-  try {
-    await PostModel.findByIdAndDelete(postID);
-  } catch (error) {
-    console.log("error deleting post");
-  }
+  await PostModel.findByIdAndDelete(postID);
+}
+
+async function getPostById(postId) {
+  const post = await PostModel.findById(postId);
+
+  return post;
 }
 
 module.exports = {
@@ -96,4 +98,5 @@ module.exports = {
   setPictures,
   getPostForUser,
   deletePost,
+  getPostById,
 };
