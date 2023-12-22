@@ -10,6 +10,7 @@ const {
   getPost,
   deletePost,
   getPostById,
+  markPostSold,
 } = require("../database/post");
 const { hasAlreadyGivenRank, addRank } = require("../database/ranks");
 const { isUserPostOwner } = require("../utils/utils");
@@ -117,6 +118,14 @@ router.post("/addrank/:id", authMiddleware.userAuth, async (req, res) => {
   }
 
   res.redirect("/");
+});
+
+router.post("/sold/:id", authMiddleware.userAuth, async (req, res) => {
+  const postID = req.params.id;
+
+  await markPostSold(postID);
+
+  return res.redirect("/");
 });
 
 module.exports = router;

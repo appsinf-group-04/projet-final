@@ -80,16 +80,31 @@
 
                         <% if (user) { %>
                             <% if (user.role === "admin") { %>
-                                <form action="/posts/delete/<%= post._id %>" method="post" onsubmit="return confirm('Supprimer définitivement cette annonce?')" class="flex flex-col mt-4 md:flex-row">
-                                    <input type="submit" value="Supprimer" class="w-full px-6 py-3 mb-4 mr-0 text-lg font-bold text-white bg-red-500 rounded-md md:w-1/2 hover:bg-red-700 md:mr-2 md:mb-0"></input>
-                                    <button type="button" class="w-full px-6 py-3 ml-0 text-lg font-bold text-white bg-red-500 rounded-md showBanModal md:w-1/2 hover:bg-red-700 md:ml-2">
-                                        Bannir
-                                    </button>
+                              <div class="flex w-full justify-between">
+                                <form action="/posts/delete/<%= post._id %>" method="post" onsubmit="return confirm('Supprimer définitivement cette annonce?')" class="mt-4 md:flex-row w-1/2 mr-2">
+                                    <input type="submit" value="Supprimer" class="w-full px-6 py-3 mr-0 text-lg font-bold text-white bg-red-500 rounded-md hover:bg-red-700"></input>
                                 </form>
+
+                                <% if (user.id === post.refUser.id) { %>
+                                  <form action="/posts/sold/<%= post._id %>" method="post" onsubmit="return confirm('Marquer cette annonce comme vendue?')" class=" mt-4 md:flex-row w-1/2 ml-2">
+                                    <input value="Marquer vendue" type="submit" class="w-full px-6 py-3 ml-0 text-lg font-bold text-white bg-red-500 rounded-md hover:bg-red-700"></input>
+                                  </form>
+                                <% } else { %>
+                                  <button type="button" class="w-full mt-4 px-6 py-3 ml-0 text-lg font-bold text-white bg-red-500 rounded-md showBanModal md:w-1/2 hover:bg-red-700 md:ml-2">
+                                      Bannir
+                                  </button>
+                                <% } %>
+                              </div>
                             <% } else if (user.id === post.refUser.id) { %>
-                                <form action="/posts/delete/<%= post._id %>" method="post" onsubmit="return confirm('Supprimer définitivement cette annonce?')" class="flex flex-col mt-4 md:flex-row">
+                              <div class="flex w-full justify-between">
+                                <form action="/posts/delete/<%= post._id %>" method="post" onsubmit="return confirm('Supprimer définitivement cette annonce?')" class="mt-4 md:flex-row md:min-w-1/2 w-full mr-2">
                                     <input type="submit" value="Supprimer" class="w-full px-6 py-3 mb-4 mr-0 text-lg font-bold text-white bg-red-500 rounded-md md:min-w-1/2 hover:bg-red-700 md:mr-2 md:mb-0"></input>
                                 </form>
+                                
+                                <form action="/posts/sold/<%= post._id %>" method="post" onsubmit="return confirm('Marquer cette annonce comme vendue?')" class="mt-4 md:min-w-1/2 w-full ml-2">
+                                  <input type="submit" value="Marquer vendue" class="w-full px-6 py-3 mb-4 mr-0 text-lg font-bold text-white bg-red-500 rounded-md md:min-w-1/2 hover:bg-red-700 md:mr-2 md:mb-0"></input>
+                                </form>
+                              </div>
                             <% } %>
                         <% } %>
                     </div>
