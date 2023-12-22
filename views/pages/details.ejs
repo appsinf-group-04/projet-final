@@ -9,6 +9,8 @@
 </head>
 
 <%- include("../components/header.ejs") %>
+<%- include("../components/banModal.ejs") %>
+<%- include("../components/interestedModal.ejs") %>
 
 <body class="min-h-screen bg-gray-100">
     <div class="max-w-screen-lg p-6 pb-10 mx-auto mt-20 sm:px-6 lg:px-8">
@@ -70,7 +72,7 @@
                         </div>
                     </div>
                     <div>
-                        <button class="w-full px-6 py-3 text-lg font-bold text-white bg-blue-500 rounded-md hover:bg-blue-600">Je suis intéressé(e)</button>
+                        <button onclick="console.log('aaaa')" class="showInterestedModal w-full px-6 py-3 text-lg font-bold text-white bg-blue-500 rounded-md hover:bg-blue-600">Je suis intéressé(e)</button>
 
                         <% if (user && user.role === "admin") { %>
                         <form action="/deletePost/<%= post._id %>" method="post" onsubmit="return confirm('Supprimer définitivement cette annonce?')" class="flex flex-col mt-4 md:flex-row">
@@ -85,8 +87,6 @@
             </div>
         </div>
     </div>
-
-    <%- include("../components/banModal.ejs") %>
 
     <script src="https://cdn.jsdelivr.net/npm/@glidejs/glide"></script>
     <script src="../../public/js/details.js"></script>

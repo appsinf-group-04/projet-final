@@ -10,7 +10,8 @@ const {
   getPost,
   deletePost,
 } = require("../database/post");
-const { banUser } = require("../database/auth");
+const { banUser, getUserByEmail } = require("../database/auth");
+const { addRank, hasAlreadyGivenRank } = require("../database/ranks");
 
 router.get("/profile/create", authMiddleware.userAuth, (req, res) => {
   const errors = req.session.errors;
@@ -91,6 +92,22 @@ router.post("/banUser/:email", authMiddleware.adminAuth, async (req, res) => {
 router.post("/deletePost/:id", authMiddleware.adminAuth, async (req, res) => {
   const postID = req.params.id;
   await deletePost(postID);
+  res.redirect("/");
+});
+
+router.post("/giveRank/:id", authMiddleware.userAuth, async (req, res) => {
+  const postID = req.params.id;
+  const { givenRank } = req.body;
+  const userID = req.session.user.id;
+  const cannotGiveRank = await hasAlreadyGivenRank(userID, postID);
+
+  if (!cannotGiveRank) {
+    addRank(postID, givenRank, userID);
+    console.log("rank added");
+  } else {
+    console.log("Already ranked that ad");
+  };
+
   res.redirect("/");
 });
 
