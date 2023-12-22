@@ -107,7 +107,7 @@ router.post("/giveRank/:id", authMiddleware.userAuth, async (req, res) => {
     console.log("rank added");
   } else {
     console.log("Already ranked that ad");
-  };
+  }
 
   res.redirect("/");
 });

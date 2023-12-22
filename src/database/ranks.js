@@ -1,5 +1,5 @@
 const UserModel = require("../models/user");
-const PostModel = require("../models/post")
+const PostModel = require("../models/post");
 const {
   createPost,
   setPictures,
@@ -15,7 +15,7 @@ const {
  */
 async function addRank(postID, value, userID) {
   const post = await getPost(postID);
-  const userToRank = await UserModel.findOne({ email: post.refUser.email});
+  const userToRank = await UserModel.findOne({ email: post.refUser.email });
 
   userToRank.ranking.push(value);
   post.interested.push(userID);
@@ -23,7 +23,9 @@ async function addRank(postID, value, userID) {
   await userToRank.save();
   await post.save();
 
-  return userToRank.ranking.reduce((a, b) => a + b, 0) / userToRank.ranking.length;
+  return (
+    userToRank.ranking.reduce((a, b) => a + b, 0) / userToRank.ranking.length
+  );
 }
 
 async function getAverageRanking(email) {
@@ -57,15 +59,20 @@ async function hasAlreadyGivenRank(userID, postID) {
   }
 
   try {
-    for(i = 0; i < post.interested.length; i++) {
+    for (i = 0; i < post.interested.length; i++) {
       if (userID === post.interested[i].toString()) {
         return true;
       }
     }
   } catch (error) {
-    console.log("error occured while checking ranks")
+    console.log("error occured while checking ranks");
   }
   return false;
 }
 
-module.exports = { addRank, getAverageRanking, resetRanking, hasAlreadyGivenRank };
+module.exports = {
+  addRank,
+  getAverageRanking,
+  resetRanking,
+  hasAlreadyGivenRank,
+};
