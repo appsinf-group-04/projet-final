@@ -119,7 +119,6 @@ async function searchPosts(query, maxPrice, sellerRank) {
   let posts = [];
 
   if (!maxPrice) {
-    console.log("no max price");
     posts = await PostModel.find({
       $or: [
         { title: { $regex: query, $options: "i" } },
